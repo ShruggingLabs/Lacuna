@@ -1,0 +1,27 @@
+.LayersListContainer {
+  user-select: none;
+}
+
+.LayerName {
+  user-select: none;
+}
+
+.LayerNameContainer {
+  padding: 8px 12px;
+}
+
+.LayerActionIcons {
+  user-select: none;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 1px;
+  right: 0px;
+  height: 100%;
+}
+
+.selectedIndicator {
+  position: absolute;
+  top: 15px;
+  left: -4px;
+}

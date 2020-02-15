@@ -1,0 +1,39 @@
+.TextLayer {
+}
+
+.TextLayer span {
+  cursor: default;
+}
+
+.bp3-editable-text-input::-webkit-scrollbar {
+  background: red;
+  width: 0px;
+}
+
+.bp3-editable-text-input::-webkit-scrollbar-thumb {
+  background: blue;
+}
+
+.MinimalInput {
+  position: relative;
+}
+.MinimalInput > input {
+  padding-right: 28px;
+  text-align: right;
+}
+
+.MinimalInput > .tagText {
+  color: rgba(67, 90, 111, 0.3);
+  position: absolute;
+  right: 8px;
+  top: 5px;
+}
+
+.MinimalInput > .Gen3Icon {
+  color: rgba(67, 90, 111, 0.3);
+}
+
+.MinimalInput:hover > .tagText,
+.MinimalInput:hover > .Gen3Icon {
+  color: #7b8b9a;
+}
