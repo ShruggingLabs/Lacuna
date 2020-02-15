@@ -38,7 +38,7 @@ import styles from "./PanelMenu.module.css"
 const PanelMenuTitle = (props) => {
   return (
     <Pane className={styles.PanelMenuTitleContainer}>
-      <Heading size={400} className={styles.PanelMenuTitle}>
+      <Heading size={400} color='#182026' className={styles.PanelMenuTitle}>
         {props.title}
       </Heading>
     </Pane>
