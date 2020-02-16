@@ -1,12 +1,12 @@
-import firebase from 'firebase'
-import 'firebase/firestore'
+import firebase from "firebase"
+import "firebase/firestore"
 
 export const db = firebase.firestore()
 
 export const collections = {
-  users: db.collection('users'),
-  organizations: db.collection('organizations'),
-  projects: db.collection('projects'),
+  users: db.collection("users"),
+  organizations: db.collection("organizations"),
+  projects: db.collection("projects")
 }
 
 const getDoc = (collection) => async (id) => {
@@ -17,6 +17,8 @@ const getDoc = (collection) => async (id) => {
 const createDoc = (collection) => (data) => {
   return collection.add(data)
 }
+
+const MERGE_OPTION = { merge: true }
 
 const updateDoc = (collection) => async (id, data) => {
   try {

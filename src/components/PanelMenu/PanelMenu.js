@@ -38,6 +38,10 @@ import styles from "./PanelMenu.module.css"
 const PanelMenuTitle = (props) => {
   return (
     <Pane className={styles.PanelMenuTitleContainer}>
+      <If condition={props.icon}>
+        <Icon.Evergreen icon={props.icon} size='14px' color='var(--colorGrayscale5)' />
+        <Spacer width='12px' />
+      </If>
       <Heading size={400} color='var(--colorGrayscale12)' className={styles.PanelMenuTitle}>
         {props.title}
       </Heading>
@@ -62,7 +66,7 @@ const PanelMenuContainer = (props) => {
 export const PanelMenu = (props) => {
   return (
     <PanelMenuContainer>
-      <PanelMenuTitle title={props.title} />
+      <PanelMenuTitle title={props.title} icon={props.titleIcon} />
       <div className={styles.divider} />
       {props.children}
     </PanelMenuContainer>

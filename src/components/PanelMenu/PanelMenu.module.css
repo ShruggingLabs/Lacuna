@@ -10,6 +10,11 @@
 .PanelMenuTitleContainer {
   padding: 8px 12px;
   background: var(--colorWhite);
+  display: flex;
+  align-items: center;
+}
+
+.titleIcon {
 }
 
 .divider {

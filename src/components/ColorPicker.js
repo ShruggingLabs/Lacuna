@@ -58,9 +58,11 @@ export const ColorPicker = (props) => {
         <Pane>
           <Button>
             <Pane display='flex' alignItems='center'>
-              <Text size={300} marginRight={8}>
-                {props.label}
-              </Text>{" "}
+              <If condition={props.label}>
+                <Text size={300} marginRight={8}>
+                  {props.label + " "}
+                </Text>
+              </If>
               <Pane style={swatchStyle} />
             </Pane>
           </Button>

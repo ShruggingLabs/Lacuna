@@ -9,37 +9,55 @@ import Store from "../../state"
 import { BoxLayerEditor } from "./BoxLayerEditor"
 import { TextLayerEditor } from "./TextLayerEditor"
 import { useKey, useKeyPressEvent } from "react-use"
+import { ImageLayerEditor } from "./ImageLayerEditor"
 
 export const LayerEditorMenu = observer((props) => {
+  const selectedLayer = Store.mainSelectedLayer
+  const isDeleted = selectedLayer?.isDeleted
+
   return (
-    <PanelMenu title='Layer Editor'>
-      {!Store.mainSelectedLayer && NoLayerSelectedText}
-      {Store.mainSelectedLayer && <LayerEditor />}
+    <PanelMenu title='Layer Editor' titleIcon='layer'>
+      {!selectedLayer && NoLayerSelectedText}
+      {selectedLayer && !isDeleted && <LayerEditor layer={selectedLayer} />}
     </PanelMenu>
   )
 })
 
-const LayerEditor = observer((props) => {
-  const layer = Store.mainSelectedLayer
+const isAnInputFocused = () => {
+  return document.querySelector("input:focus")
+}
+
+const LayerEditor = (props) => {
+  const { layer } = props
 
   useKey("ArrowLeft", (event) => {
+    if (isAnInputFocused()) return
     const newValue = event.shiftKey ? layer.style.left - 10 : layer.style.left - 1
     layer.style.setLeft(newValue)
   })
 
   useKey("ArrowRight", (event) => {
+    if (isAnInputFocused()) return
     const newValue = event.shiftKey ? layer.style.left + 10 : layer.style.left + 1
     layer.style.setLeft(newValue)
   })
 
   useKey("ArrowUp", (event) => {
+    if (isAnInputFocused()) return
     const newValue = event.shiftKey ? layer.style.top - 10 : layer.style.top - 1
     layer.style.setTop(newValue)
   })
 
   useKey("ArrowDown", (event) => {
+    if (isAnInputFocused()) return
     const newValue = event.shiftKey ? layer.style.top + 10 : layer.style.top + 1
     layer.style.setTop(newValue)
+  })
+
+  useKey("Delete", (event) => {
+    console.log("delete...", event.key)
+    if (isAnInputFocused()) return
+    layer.trash()
   })
 
   return (
@@ -51,30 +69,16 @@ const LayerEditor = observer((props) => {
         <When condition={layer.type === "box"}>
           <BoxLayerEditor layer={layer} />
         </When>
+        <When condition={layer.type === "image"}>
+          <ImageLayerEditor layer={layer} />
+        </When>
       </Choose>
     </div>
   )
-})
+}
 
 const NoLayerSelectedText = (
   <div style={{ padding: 8, paddingBottom: 0 }}>
     <p className={Classes.TEXT_MUTED}>No layer selected.</p>
   </div>
 )
-
-const ID_TEXT_CLASSNAMES = classcat([
-  "uppercaseText",
-  Classes.TEXT_OVERFLOW_ELLIPSIS,
-  Classes.TEXT_SMALL,
-  Classes.TEXT_MUTED
-])
-
-const MenuTitle = (props) => {
-  const text = (
-    <Pane style={{ display: "flex", justifyContent: "space-between" }}>
-      <CapsText size={400}></CapsText>
-    </Pane>
-  )
-
-  return <MenuItem tagName='p' className='MenuTitle' text={text} />
-}

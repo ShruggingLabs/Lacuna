@@ -9,7 +9,7 @@ import "./styles/blueprint.css"
 import "./styles/blueprint-icons.css"
 import "./styles/index.css"
 
-import { ThemeProvider, defaultTheme } from "evergreen-ui"
+import { ThemeProvider, defaultTheme, Pane } from "evergreen-ui"
 
 export default function App() {
   const Provider = useProvider()
@@ -29,7 +29,17 @@ export default function App() {
 const TopBar = (props) => {
   return (
     <div className='TopBar'>
-      <img src='images/lacuna-logo-mark-0.svg' style={{ maxWidth: 25 }} />
+      <Pane
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        paddingX='24px'
+        // backgroundColor='rgba(54, 174, 232, 0.16)'
+        borderRight='1px solid var(--colorGrayscale2)'
+        height='100%'
+      >
+        <img src='images/lacuna-logo-mark-0.svg' style={{ maxWidth: 30 }} />
+      </Pane>
     </div>
   )
 }

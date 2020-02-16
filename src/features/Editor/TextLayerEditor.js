@@ -33,85 +33,32 @@ import { ColorPicker } from "../../components/ColorPicker"
 import { CapsText } from "../../components/CapsText"
 import { TextInput } from "../../components/TextInput"
 import { withEventValue } from "./../../utilities/withEventValue"
+import { LayerRectEditor } from "./LayerRectEditor"
 
 export const TextLayerEditor = observer((props) => {
   const { layer } = props
 
   return (
     <>
-      <Spacer height='12px' />
-
-      <InputRow>
-        <CapsText>Positioning</CapsText>
-      </InputRow>
-
-      <Spacer height='16px' />
-
-      <InputRow>
-        <TextInput
-          placeholder='0px'
-          value={layer.style.left}
-          onChange={withEventValue(layer.style.setLeft)}
-          iconName='arrow-from-right'
-          iconHint='X Position'
-          type='number'
-          tagText='px'
-        />
-        <Spacer width='24px' />
-        <TextInput
-          placeholder='0px'
-          value={layer.style.top}
-          onChange={withEventValue(layer.style.setTop)}
-          iconName='arrow-from-top'
-          iconHint='Y Position'
-          type='number'
-          tagText='px'
-        />
-      </InputRow>
-
-      <Spacer height='24px' />
-
-      <InputRow>
-        <CapsText>Size</CapsText>
-      </InputRow>
-
-      <Spacer height='16px' />
-
-      <InputRow>
-        <TextInput
-          placeholder='auto'
-          value={layer.style.width}
-          onChange={withEventValue(layer.style.setWidth)}
-          iconName='arrows-resize-h'
-          iconHint='Width'
-          type='number'
-          tagText='px'
-        />
-        <Spacer width='24px' />
-        <TextInput
-          isDisabled
-          placeholder='auto'
-          value={" "}
-          iconName='arrows-resize-v'
-          iconHint='Height'
-          type='number'
-          tagText='px'
-          disabled
-        />
-      </InputRow>
-
-      <Spacer height='24px' />
+      <LayerRectEditor layer={layer} />
 
       <InputRow>
         <CapsText>Font</CapsText>
       </InputRow>
 
-      <Spacer height='16px' />
+      <Spacer shrink={0} height='16px' />
 
       <InputRow>
         <FontFamilyPicker layer={layer} />
+        <Spacer shrink={0} width='12px' />
+        <ColorPicker
+          label=''
+          onChange={(rgb) => props.layer.style.setColor(rgb)}
+          currentColor={layer.style.rgbaColorString}
+          layer={layer}
+        />
       </InputRow>
-      <Spacer height='16px' />
+      <Spacer shrink={0} height='16px' />
       <InputRow>
         <TextInput
           // size='small'
@@ -123,7 +70,7 @@ export const TextLayerEditor = observer((props) => {
           type='number'
           tagText='px'
         />
-        <Spacer width='24px' />
+        <Spacer shrink={0} width='12px' />
         <TextInput
           // size='small'
           // label='Line Height'
@@ -136,7 +83,7 @@ export const TextLayerEditor = observer((props) => {
           tagText='x'
           step={0.1}
         />
-        <Spacer width='24px' />
+        <Spacer shrink={0} width='12px' />
         <TextInput
           placeholder='0px'
           value={layer.style.letterSpacing}
@@ -148,37 +95,20 @@ export const TextLayerEditor = observer((props) => {
           tagText='px'
         />
       </InputRow>
-      <Spacer height='16px' />
+      <Spacer shrink={0} height='16px' />
       <InputRow>
         <FontWeightPicker layer={layer} />
-        <Spacer width='24px' />
+        <Spacer shrink={0} width='12px' />
         <FontStylePicker layer={layer} />
       </InputRow>
 
-      <Spacer height='16px' />
-      <InputRow>
-        <ColorPicker
-          label='Color'
-          onChange={(rgb) => props.layer.style.setColor(rgb)}
-          currentColor={layer.style.rgbaColorString}
-          layer={layer}
-        />
-        <Spacer width='24px' />
-        <ColorPicker
-          label='Background'
-          onChange={(rgb) => props.layer.style.setBackgroundColor(rgb)}
-          currentColor={layer.style.rgbaBackgroundColorString}
-          layer={layer}
-        />
-      </InputRow>
-
-      <Spacer height='24px' />
+      <Spacer shrink={0} height='24px' />
 
       <InputRow>
         <CapsText size={300}>Text</CapsText>
       </InputRow>
 
-      <Spacer height='12px' />
+      <Spacer shrink={0} height='12px' />
 
       <InputRow>
         <TextValueInput layer={layer} />

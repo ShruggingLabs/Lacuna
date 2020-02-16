@@ -12,6 +12,7 @@ import { observer } from "mobx-react"
 import Spacer from "react-spacer"
 
 export const Alerts = observer((props) => {
+  return null
   return (
     <>
       <If condition={Store.isLoadingImage}>

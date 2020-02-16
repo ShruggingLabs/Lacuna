@@ -1,8 +1,8 @@
-import { types, getParent, destroy } from "mobx-state-tree"
+import { types, getParent, destroy, detach, flow } from "mobx-state-tree"
 
 import { withEventValue } from "../../utilities/withEventValue"
 import { nanoid } from "../../utilities/nanoid"
-import { reaction } from "mobx"
+import { reaction, action } from "mobx"
 
 const LAYER_TYPES_ENUM = types.enumeration(["text", "image", "box"])
 
@@ -18,6 +18,7 @@ const LayerModel = {
   isLocked: types.optional(types.boolean, false),
   isSelected: types.optional(types.boolean, false),
   isDeleting: types.optional(types.boolean, false),
+  isDeleted: types.optional(types.boolean, false),
   foo: 0,
   scaleX: 1,
   scaleY: 1
@@ -48,9 +49,13 @@ const actions = (self) => {
     self.style.setWidth(attributes.x)
   }
 
-  const remove = () => {
+  const trash = flow(function*() {
     getParent(self, 2).removeLayer(self)
-  }
+  })
+
+  const remove = action(() => {
+    getParent(self, 2).removeLayer(self)
+  })
 
   const setIsDeleting = (bool) => {
     self.isDeleting = bool
@@ -80,6 +85,7 @@ const actions = (self) => {
 
   return {
     setFoo,
+    trash,
     onDoneDeleting,
     onDoneDeleting,
     setIsDeleting,

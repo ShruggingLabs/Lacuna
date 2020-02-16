@@ -11,8 +11,8 @@ const Height = types.refinement(types.number, (n) => minMax(0, 1056)(n))
 const model = {
   id: types.identifier,
   type: LAYER_TYPES_ENUM,
-  top: 50,
-  left: 50,
+  top: 24,
+  left: 24,
   opacity: 1,
   position: "absolute",
   width: types.optional(Width, 350),
@@ -25,17 +25,16 @@ const actions = (self) => {
   const topMinMax = minMax(0, 1056)
 
   const setTop = (value) => {
-    self.top = topMinMax(Number(value))
+    self.top = Math.round(topMinMax(Number(value)))
   }
 
   const setLeft = (value) => {
-    self.left = leftMinMax(Number(value))
+    self.left = Math.round(leftMinMax(Number(value)))
   }
 
-  const setWidth = (value) => (self.width = Number(value))
-  const setHeight = (value) => (self.height = Number(value))
-
-  const setOpacity = (value) => (self.opacity = Number(value))
+  const setWidth = (value) => (self.width = Math.round(Number(value)))
+  const setHeight = (value) => (self.height = Math.round(Number(value)))
+  const setOpacity = (value) => (self.opacity = Math.round(Number(value)))
   const setBackgroundColor = (value) => (self.backgroundColor = value)
   const afterCreate = () => {}
 

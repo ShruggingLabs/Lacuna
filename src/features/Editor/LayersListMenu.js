@@ -49,7 +49,7 @@ export const LayersListMenu = observer(() => {
   const menuTitle = `Layers (${store.layers.length})`
 
   return (
-    <PanelMenu title={menuTitle}>
+    <PanelMenu title={menuTitle} titleIcon='layers'>
       <If condition={isLayersEmpty}>
         <div style={{ width: "100%", height: 28 }} />
       </If>

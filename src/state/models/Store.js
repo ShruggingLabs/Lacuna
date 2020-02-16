@@ -1,11 +1,13 @@
-import { types, getParent, destroy, flow } from "mobx-state-tree"
+import sleep from "sleepjs"
+import { types, getParent, destroy, flow, detach } from "mobx-state-tree"
 import makeInspectable from "mobx-devtools-mst"
 import arrayMove from "array-move"
 import ImageLayer from "./ImageLayer"
 import TextLayer from "./TextLayer"
 import BoxLayer from "./BoxLayer"
-import { autorun, action } from "mobx"
+import { autorun, action, toJS } from "mobx"
 import delay from "delay"
+import { saveProject } from "../../services/database/data/saveProject"
 
 const LayersUnion = types.union(ImageLayer, TextLayer, BoxLayer)
 
@@ -16,7 +18,9 @@ const StoreModel = {
   isLoadingFont: false,
   sortingLayerId: "",
   wasImageRecentlyLoaded: false,
-  wasFontRecentlyLoaded: false
+  wasFontRecentlyLoaded: false,
+  setWasProjectRecentlySaved: false,
+  isCanvasGridVisible: true
 }
 
 const actions = (self) => {
@@ -34,7 +38,7 @@ const actions = (self) => {
     self.layers.push(
       BoxLayer.create({
         style: {
-          backgroundColor: { r: 234, g: 231, b: 248, a: 1 }
+          backgroundColor: { r: 239, g: 53, b: 115, a: 1 }
         }
       })
     )
@@ -49,9 +53,11 @@ const actions = (self) => {
     setMainSelectedLayer()
   }
 
-  const removeLayer = (layer) => {
+  const removeLayer = flow(function*(layer) {
+    detach(layer)
+    yield sleep(500)
     destroy(layer)
-  }
+  })
 
   const setIsLoadingImage = (value) => {
     self.isLoadingImage = value
@@ -83,6 +89,10 @@ const actions = (self) => {
     makeInspectable(self)
   }
 
+  const toggleCanvasGrid = action(() => {
+    self.isCanvasGridVisible = !self.isCanvasGridVisible
+  })
+
   const handleRecentlyLoadedImage = flow(function*() {
     self.setWasImageRecentlyLoaded(true)
     yield delay(2500)
@@ -93,6 +103,14 @@ const actions = (self) => {
     self.setWasFontRecentlyLoaded(true)
     yield delay(2500)
     self.setWasFontRecentlyLoaded(false)
+  })
+
+  const save = flow(function*() {
+    yield saveProject("2Ful8McNxcefAlD23AjrMh", toJS(self.layers))
+    // TODO: Probably handle in component...
+    self.setWasProjectRecentlySaved(true)
+    yield sleep(2000)
+    self.setWasProjectRecentlySaved(false)
   })
 
   return {
@@ -108,6 +126,8 @@ const actions = (self) => {
     selectLayer,
     deselectLayer,
     removeLayer,
+    save,
+    toggleCanvasGrid,
 
     setWasFontRecentlyLoaded: action((value) => {
       self.wasFontRecentlyLoaded = value
@@ -115,6 +135,10 @@ const actions = (self) => {
 
     setWasImageRecentlyLoaded: action((value) => {
       self.wasImageRecentlyLoaded = value
+    }),
+
+    setWasProjectRecentlySaved: action((value) => {
+      self.wasProjectRecentlySaved = value
     })
   }
 }

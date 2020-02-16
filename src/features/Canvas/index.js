@@ -1,19 +1,14 @@
-import React, { Component } from "react"
-import { Stage, Group, Layer, Image, Text, Rect } from "react-konva"
-import useImage from "use-image"
-
-import { Alert, Pane, Button, Badge } from "evergreen-ui"
-
-import { CanvasImage } from "./CanvasImage"
-import { observable, action, autorun, computed } from "mobx"
+import { autorun } from "mobx"
 import { observer, Observer } from "mobx-react"
-import nanoid from "nanoid"
-import { Transformer } from "./Transformer"
-import Store from "../../state/index"
+import React, { Component } from "react"
 import Dropzone from "react-dropzone"
-import { windowLocation } from "./../../utilities/windowLocation"
+import { Layer, Rect, Stage, Text } from "react-konva"
 import * as services from "../../services/database"
+import Store from "../../state/index"
 import * as storage from "../../utilities/backend/storage"
+import { CanvasImage } from "./CanvasImage"
+import { Transformer } from "./Transformer"
+import { CanvasGrid } from "./CanvasGrid"
 
 class CanvasComponent extends Component {
   dropzoneRef = React.createRef()
@@ -55,6 +50,7 @@ class CanvasComponent extends Component {
 
   render() {
     const layers = Store.layers
+    const isCanvasGridVisible = Store.isCanvasGridVisible
     const selectedId = Store.mainSelectedLayer?.id
     const isLoadingFont = Store.isLoadingFont
     const forceUpdate = () => this.forceUpdate
@@ -81,6 +77,11 @@ class CanvasComponent extends Component {
                   onClick={this.onCanvasClick}
                 >
                   <Layer>
+                    <CanvasGrid
+                      cellSize={10}
+                      isVisible={isCanvasGridVisible}
+                      strokeColor='#36AEE8'
+                    />
                     {layers.map((layer) => {
                       if (layer.type === "image") {
                         return (
@@ -129,58 +130,56 @@ class CanvasComponent extends Component {
 export const Canvas = observer(CanvasComponent)
 
 const CanvasTextLayer = observer((props) => {
-  const { layer } = props
   const ref = React.useRef()
-
-  const isDraggable = layer.isVisible && props.isSelected
+  const isDraggable = props.layer.isVisible && props.isSelected
 
   const onDragEnd = ({ target }) => {
-    layer.reposition(target.attrs)
+    props.layer.reposition(target.attrs)
   }
 
   const onTransform = ({ evt, currentTarget }) => {
     currentTarget.setAttrs({
-      width: Math.floor(currentTarget.width() * currentTarget.scaleX()),
+      width: Math.round(currentTarget.width() * currentTarget.scaleX()),
       scaleX: 1
     })
   }
 
   const onTransformEnd = ({ target }) => {
-    layer.style.setWidth(Math.floor(target.width()))
+    props.layer.style.setWidth(Math.round(target.width()))
   }
 
   React.useEffect(() => {
     props.updateParent()
-  }, [layer.style.isLoadingFont])
+  }, [props.layer.style.isLoadingFont])
 
   return (
     <Text
       ref={ref}
       type='text'
-      id={layer.id}
-      layer={layer}
-      name={layer.name}
-      layerId={layer.id}
+      id={props.layer.id}
+      layer={props.layer}
+      name={props.layer.name}
+      layerId={props.layer.id}
       draggable={isDraggable}
-      visible={layer.isVisible}
-      x={layer.style.left}
-      y={layer.style.top}
-      scaleX={layer.scaleX}
-      scaleY={layer.scaleY}
+      visible={props.layer.isVisible}
+      x={props.layer.style.left}
+      y={props.layer.style.top}
+      scaleX={props.layer.scaleX}
+      scaleY={props.layer.scaleY}
       offsetX={0}
       offsetY={0}
       dragDistance={12}
       wrap='word'
-      fill={layer.style.rgbaColorString}
-      lineHeight={layer.style.lineHeight}
-      letterSpacing={layer.style.letterSpacing}
-      fontFamily={layer.style.fontFamily}
-      fontSize={layer.style.fontSize}
-      fontStyle={`${layer.style.fontWeight} ${layer.style.fontStyle}`}
-      width={layer.style.width}
-      verticalAlign={layer.style.verticalAlign}
-      align={layer.style.align}
-      text={layer.text}
+      fill={props.layer.style.rgbaColorString}
+      lineHeight={props.layer.style.lineHeight}
+      letterSpacing={props.layer.style.letterSpacing}
+      fontFamily={props.layer.style.fontFamily}
+      fontSize={props.layer.style.fontSize}
+      fontStyle={`${props.layer.style.fontWeight} ${props.layer.style.fontStyle}`}
+      width={props.layer.style.width}
+      verticalAlign={props.layer.style.verticalAlign}
+      align={props.layer.style.align}
+      text={props.layer.text}
       onDragEnd={onDragEnd}
       onTransform={onTransform}
       onTransformEnd={onTransformEnd}
@@ -190,6 +189,23 @@ const CanvasTextLayer = observer((props) => {
 
 const CanvasImageLayer = observer((props) => {
   const ref = React.useRef()
+
+  const onDragEnd = ({ target }) => {
+    props.layer.reposition(target.attrs)
+  }
+
+  const onTransform = ({ evt, currentTarget }) => {
+    currentTarget.setAttrs({
+      width: Math.round(currentTarget.width() * currentTarget.scaleX()),
+      height: Math.round(currentTarget.height() * currentTarget.scaleY()),
+      scaleX: 1
+    })
+  }
+
+  const onTransformEnd = ({ target }) => {
+    props.layer.style.setWidth(Math.round(target.width()))
+    props.layer.style.setHeight(Math.round(target.height()))
+  }
 
   return (
     <CanvasImage
@@ -207,26 +223,32 @@ const CanvasImageLayer = observer((props) => {
       src={props.layer.image.fileUrl}
       id={props.layer.id}
       layerId={props.layer.id}
-      onDragEnd={({ target }) => {
-        props.layer.reposition(target.attrs)
-      }}
-      onTransform={({ evt, currentTarget }) => {
-        currentTarget.setAttrs({
-          width: Math.floor(currentTarget.width() * currentTarget.scaleX()),
-          height: Math.floor(currentTarget.height() * currentTarget.scaleY()),
-          scaleX: 1
-        })
-      }}
-      onTransformEnd={({ target }) => {
-        props.layer.style.setWidth(Math.floor(target.width()))
-        props.layer.style.setHeight(Math.floor(target.height()))
-      }}
+      onDragEnd={onDragEnd}
+      onTransform={onTransform}
+      onTransformEnd={onTransformEnd}
     />
   )
 })
 
 const CanvasBoxLayer = observer((props) => {
   const ref = React.useRef()
+
+  const onDragEnd = ({ target }) => {
+    props.layer.reposition(target.attrs)
+  }
+
+  const onTransform = ({ evt, currentTarget }) => {
+    currentTarget.setAttrs({
+      width: Math.round(currentTarget.width() * currentTarget.scaleX()),
+      height: Math.round(currentTarget.height() * currentTarget.scaleY()),
+      scaleX: 1
+    })
+  }
+
+  const onTransformEnd = ({ target }) => {
+    props.layer.style.setWidth(Math.round(target.width()))
+    props.layer.style.setHeight(Math.round(target.height()))
+  }
 
   return (
     <Rect
@@ -243,20 +265,9 @@ const CanvasBoxLayer = observer((props) => {
       y={props.layer.style.top}
       id={props.layer.id}
       layerId={props.layer.id}
-      onDragEnd={({ target }) => {
-        props.layer.reposition(target.attrs)
-      }}
-      onTransform={({ evt, currentTarget }) => {
-        currentTarget.setAttrs({
-          width: Math.floor(currentTarget.width() * currentTarget.scaleX()),
-          height: Math.floor(currentTarget.height() * currentTarget.scaleY()),
-          scaleX: 1
-        })
-      }}
-      onTransformEnd={({ target }) => {
-        props.layer.style.setWidth(Math.floor(ref.current.width()))
-        props.layer.style.setHeight(Math.floor(ref.current.height()))
-      }}
+      onDragEnd={onDragEnd}
+      onTransform={onTransform}
+      onTransformEnd={onTransformEnd}
     />
   )
 })
