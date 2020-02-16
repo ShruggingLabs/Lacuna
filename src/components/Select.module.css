@@ -1,0 +1,31 @@
+.SelectContainer {
+  display: flex;
+}
+
+.SelectContainer select {
+  background: var(--colorWhite);
+  border: 1px solid var(--gray5);
+  box-shadow: none;
+  padding-right: 28px;
+}
+
+.SelectContainer select:hover {
+  background: var(--colorWhite) !important;
+  border: 1px solid var(--gray5);
+  box-shadow: none;
+  padding-right: 28px;
+}
+
+.SelectContainer select:focus {
+  outline: none;
+  border-color: #1070ca;
+  box-shadow: 0px 0px 0px 1px #1070ca inset !important;
+}
+
+.SelectContainer select option {
+  padding: 24px;
+}
+
+.Select {
+  background: var(--colorWhite);
+}

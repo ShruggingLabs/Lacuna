@@ -68,10 +68,10 @@ class CanvasComponent extends Component {
                 id='Canvas'
                 className='Canvas'
                 {...getRootProps({
-                  onClick: (event) => event.preventDefault()
+                  onClick: (event) => event.preventDefault(),
+                  className: "CanvasContainer"
                 })}
               >
-                {/* <input {...getInputProps()} /> */}
                 <Stage
                   width={816}
                   height={1056}

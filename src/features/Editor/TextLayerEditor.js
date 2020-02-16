@@ -12,18 +12,16 @@ import { Icon } from "../../components/Icon"
 import { Input } from "../../components/Input"
 
 import { Button } from "@blueprintjs/core"
-// import { Select } from "@blueprintjs/select"
+import { Select } from "../../components/Select"
 import { fontsManager } from "../../utilities/fontsManager"
 
 import {
   Pane,
   Label,
   Textarea,
-  TextInput,
   Text,
   Badge,
   Strong,
-  Select,
   Popover,
   Position,
   Positioner,
@@ -32,21 +30,24 @@ import {
 } from "evergreen-ui"
 
 import { ColorPicker } from "../../components/ColorPicker"
+import { CapsText } from "../../components/CapsText"
+import { TextInput } from "../../components/TextInput"
 
 export const TextLayerEditor = observer((props) => {
   const { layer } = props
 
   return (
     <>
-      <Spacer height='8px' />
+      <Spacer height='12px' />
 
       <InputRow>
-        <Text>Size/Positioning</Text>
+        <CapsText>Positioning</CapsText>
       </InputRow>
 
-      <Spacer height='12px' />
+      <Spacer height='16px' />
+
       <InputRow>
-        <MinimalInput
+        <TextInput
           placeholder='0px'
           value={layer.style.left}
           onChange={layer.style.setLeft}
@@ -56,7 +57,7 @@ export const TextLayerEditor = observer((props) => {
           tagText='px'
         />
         <Spacer width='24px' />
-        <MinimalInput
+        <TextInput
           placeholder='0px'
           value={layer.style.top}
           onChange={layer.style.setTop}
@@ -67,10 +68,16 @@ export const TextLayerEditor = observer((props) => {
         />
       </InputRow>
 
-      <Spacer height='12px' />
+      <Spacer height='24px' />
 
       <InputRow>
-        <MinimalInput
+        <CapsText>Size</CapsText>
+      </InputRow>
+
+      <Spacer height='16px' />
+
+      <InputRow>
+        <TextInput
           placeholder='auto'
           value={layer.style.width}
           onChange={layer.style.setWidth}
@@ -80,32 +87,32 @@ export const TextLayerEditor = observer((props) => {
           tagText='px'
         />
         <Spacer width='24px' />
-        <MinimalInput
+        <TextInput
           isDisabled
           placeholder='auto'
           value={" "}
-          // onChange={layer.style.setHeight}
           iconName='arrows-resize-v'
           iconHint='Height'
           type='number'
           tagText='px'
+          disabled
         />
       </InputRow>
 
-      <Spacer height='8px' />
-      <Divider />
-      <Spacer height='12px' />
+      <Spacer height='24px' />
 
       <InputRow>
-        <Text>Text Formatting</Text>
+        <CapsText>Font</CapsText>
       </InputRow>
-      <Spacer height='12px' />
+
+      <Spacer height='16px' />
+
       <InputRow>
         <FontFamilyPicker layer={layer} />
       </InputRow>
-      <Spacer height='12px' />
+      <Spacer height='16px' />
       <InputRow>
-        <MinimalInput
+        <TextInput
           // size='small'
           placeholder='16px'
           value={layer.style.fontSize}
@@ -116,7 +123,7 @@ export const TextLayerEditor = observer((props) => {
           tagText='px'
         />
         <Spacer width='24px' />
-        <MinimalInput
+        <TextInput
           // size='small'
           // label='Line Height'
           placeholder='100%'
@@ -129,7 +136,7 @@ export const TextLayerEditor = observer((props) => {
           step={0.1}
         />
         <Spacer width='24px' />
-        <MinimalInput
+        <TextInput
           placeholder='0px'
           value={layer.style.letterSpacing}
           onChange={layer.style.setLetterSpacing}
@@ -140,14 +147,14 @@ export const TextLayerEditor = observer((props) => {
           tagText='px'
         />
       </InputRow>
-      <Spacer height='12px' />
+      <Spacer height='16px' />
       <InputRow>
         <FontWeightPicker layer={layer} />
         <Spacer width='24px' />
         <FontStylePicker layer={layer} />
       </InputRow>
 
-      <Spacer height='12px' />
+      <Spacer height='16px' />
       <InputRow>
         <ColorPicker
           label='Color'
@@ -164,11 +171,17 @@ export const TextLayerEditor = observer((props) => {
         />
       </InputRow>
 
-      <Spacer height='8px' />
-      <Divider />
+      <Spacer height='24px' />
+
+      <InputRow>
+        <CapsText size={300}>Text</CapsText>
+      </InputRow>
+
       <Spacer height='12px' />
 
-      <TextValueInput layer={layer} />
+      <InputRow>
+        <TextValueInput layer={layer} />
+      </InputRow>
     </>
   )
 })
@@ -203,29 +216,29 @@ const MinimalInput = (props) => {
   )
 }
 
-MinimalInput.defaultProps = {
-  width: "100%",
-  step: 1
-}
-
 const TextValueInput = observer((props) => {
   return (
-    <Pane>
-      <Label htmlFor='TextValueInput' marginBottom={4} display='block'>
-        Text Value
-      </Label>
-      <Textarea
-        value={props.layer.text}
-        onChange={(e) => props.layer.setText(e)}
-        id='TextValueInput'
-        placeholder='Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.'
-      />
-    </Pane>
+    <Textarea
+      value={props.layer.text}
+      onChange={(e) => props.layer.setText(e)}
+      id='TextValueInput'
+      placeholder='Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.'
+    />
   )
 })
 
 const InputRow = (props) => {
-  return <div className='inputRow'>{props.children}</div>
+  return (
+    <Pane
+      display='flex'
+      flexWrap='nowrap'
+      flexDirection='row'
+      justifyContent='stretch'
+      width='100%'
+    >
+      {props.children}
+    </Pane>
+  )
 }
 
 const FontFamilyPicker = observer((props) => {
@@ -234,13 +247,8 @@ const FontFamilyPicker = observer((props) => {
       width='100%'
       onChange={(event) => props.layer.style.setFontFamily(event.target.value)}
       value={props.layer.style.fontFamily}
-    >
-      <For each='fontName' of={fontsManager.fontNames}>
-        <option value={fontName} key={fontName}>
-          {fontName}
-        </option>
-      </For>
-    </Select>
+      options={fontsManager.fontNames}
+    />
   )
 })
 
@@ -250,36 +258,25 @@ const FontWeightPicker = observer((props) => {
       width='100%'
       onChange={(event) => props.layer.style.setFontWeight(event.target.value)}
       value={props.layer.style.fontWeight}
-    >
-      <For each='fontWeight' of={fontsManager.getFontWeights(props.layer.style.fontFamily)}>
-        <option value={fontWeight} key={fontWeight}>
-          {fontWeight}
-        </option>
-      </For>
-    </Select>
+      options={fontsManager.getFontWeights(props.layer.style.fontFamily)}
+    />
   )
 })
 
 // <Icon name='italic' style={{ fontSize: 22 }} /> {props.layer.style.fontStyle}
 const FontStylePicker = observer((props) => {
+  const options = fontsManager.getFontWeightStyles(
+    props.layer.style.fontFamily,
+    props.layer.style.fontWeight
+  )
+
   return (
     <Select
       width='100%'
       onChange={(event) => props.layer.style.setFontStyle(event.target.value)}
       value={props.layer.style.fontStyle}
-    >
-      <For
-        each='fontStyle'
-        of={fontsManager.getFontWeightStyles(
-          props.layer.style.fontFamily,
-          props.layer.style.fontWeight
-        )}
-      >
-        <option value={fontStyle} key={fontStyle}>
-          {fontStyle}
-        </option>
-      </For>
-    </Select>
+      options={options}
+    />
   )
 })
 

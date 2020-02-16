@@ -12,20 +12,16 @@ import { Input } from "../../components/Input"
 import { TextLayerEditor } from "./TextLayerEditor"
 import { BoxLayerEditor } from "./BoxLayerEditor"
 
-import { Text } from "evergreen-ui"
+import { CapsText } from "../../components/CapsText"
+import { Pane } from "evergreen-ui"
+import { PanelMenu } from "../../components/PanelMenu/PanelMenu"
 
 export const LayerEditorMenu = observer((props) => {
   return (
-    <>
-      <div className='LayerEditorMenu'>
-        <Menu className={Classes.ELEVATION_1}>
-          <MenuTitle />
-          <MenuDivider />
-          {!Store.mainSelectedLayer && NoLayerSelectedText}
-          {Store.mainSelectedLayer && <LayerEditor />}
-        </Menu>
-      </div>
-    </>
+    <PanelMenu title='Layer Editor'>
+      {!Store.mainSelectedLayer && NoLayerSelectedText}
+      {Store.mainSelectedLayer && <LayerEditor />}
+    </PanelMenu>
   )
 })
 
@@ -59,22 +55,11 @@ const ID_TEXT_CLASSNAMES = classcat([
   Classes.TEXT_MUTED
 ])
 
-const CapsText = (props) => {
-  return (
-    <Text {...props} style={{ textTransform: "uppercase", letterSpacing: 3, fontWeight: 700 }} />
-  )
-}
-
 const MenuTitle = (props) => {
-  const layerName = Store.mainSelectedLayer?.name
-  const nameText = <CapsText className={ID_TEXT_CLASSNAMES}>{layerName || ""}</CapsText>
-
   const text = (
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-      Layer Editor
-      <Spacer width='24px' />
-      {nameText}
-    </div>
+    <Pane style={{ display: "flex", justifyContent: "space-between" }}>
+      <CapsText size={400}></CapsText>
+    </Pane>
   )
 
   return <MenuItem tagName='p' className='MenuTitle' text={text} />

@@ -7,28 +7,65 @@
   transform: rotate(-0.0000000001deg);
   -webkit-font-smoothing: antialiased;
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.05);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  letter-spacing: 0.3px;
+  letter-spacing: 0px;
 }
 
 :root {
-  --bodyFont: "JetBrains Mono", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+  --fontBody: "JetBrains Mono", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 body {
   width: 100vw;
   height: 100vh;
-  font-family: var(--bodyFont);
+  font-family: var(--fontBody);
+  color: var(--colorBlack);
 }
 
 .📦fnt-fam_b77syt {
-  font-family: var(--bodyFont);
+  font-family: var(--fontBody);
 }
 
 :root {
-  --black: #10161a;
+  --black: #1d2329;
+
+  /**/
+  --colorBlack: #313742;
+  --colorWhite: #ffffff;
+
+  --colorPink0: #fbcddc;
+  --colorPink1: #f8a7c2;
+  --colorPink2: #f581a8;
+  --colorPink3: #f25b8d;
+  --colorPink4: #ef3573;
+  --colorPink5: #c22b5d;
+  --colorPink6: #952148;
+  --colorPink7: #691732;
+  --colorPink8: #3c0d1d;
+
+  --colorGreen0: #c5f3dd;
+  --colorGreen1: #9aeac4;
+  --colorGreen2: #6ee0ab;
+  --colorGreen3: #43d791;
+  --colorGreen4: #17ce78;
+  --colorGreen5: #13a762;
+  --colorGreen6: #0e814b;
+  --colorGreen7: #0a5a35;
+  --colorGreen8: #06341e;
+
+  --colorGrayscale0: var(--colorWhite);
+  --colorGrayscale1: #f4f5f6;
+  --colorGrayscale2: #e1e1e4;
+  --colorGrayscale3: #cdced3;
+  --colorGrayscale4: #b9bbc1;
+  --colorGrayscale5: #a5a8af;
+  --colorGrayscale6: #92959d;
+  --colorGrayscale7: #7e828b;
+  --colorGrayscale8: #6b6f79;
+  --colorGrayscale9: #575c67;
+  --colorGrayscale10: #444a54;
+  --colorGrayscale11: var(--colorBlack);
+  /**/
 
   --dark-gray1: #182026;
   --dark-gray2: #202b33;
@@ -46,7 +83,7 @@ body {
   --light-gray2: #d8e1e8;
   --light-gray3: #e1e8ed;
   --light-gray4: #ebf1f5;
-  --light-gray5: #f5f8fa;
+  --light-gray5: hsla(220, 17%, 97%, 1);
 
   --white: #ffffff;
 
@@ -160,11 +197,14 @@ body {
 }
 
 .TopBar {
-  height: 48px;
+  height: 64px;
   background: var(--white);
   box-shadow: var(--elevation2);
   z-index: 100;
   border-bottom: 1px solid #cfd4d9;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
 }
 
 .Editor {
@@ -173,7 +213,8 @@ body {
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 48px 24px;
-  background: #e4e7eb;
+  /* background: #eef0f2; */
+  background: #eaecf0;
   display: flex;
   justify-content: center;
 }
@@ -217,7 +258,7 @@ body {
 }
 
 .LayerEditor {
-  padding: 8px;
+  padding: 8px 12px;
   padding-bottom: 12px;
   display: flex;
   flex-direction: column;
@@ -416,34 +457,6 @@ i:focus {
   border: 1px solid rgba(67, 90, 111, 0.3);
   font-family: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
     Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
-}
-
-.LayerItem {
-  background: rgba(67, 90, 111, 0.06);
-  border-bottom: 1px solid rgb(237, 240, 242);
-}
-
-.LayerItem:hover {
-  background: #fff;
-}
-
-.LayerItem.notVisible > div {
-  opacity: 0.45;
-}
-
-.LayerItem.notVisible:hover {
-  background: #f5f6f7;
-}
-
-.LayerItem.isSelected {
-  background: #1070ca;
-  color: white;
-  /* content:  */
-}
-
-.LayerItem.isSorting {
-  background: black;
-  border: 1px dashed rgba(167, 182, 194, 0.3);
 }
 
 .cnh_ended {

@@ -6,6 +6,11 @@
   user-select: none;
 }
 
+.isSelectedLayerName {
+  font-weight: 700;
+  color: #1070ca;
+}
+
 .LayerNameContainer {
   padding: 8px 12px;
 }

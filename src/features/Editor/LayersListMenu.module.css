@@ -1,0 +1,26 @@
+.LayerItem {
+  background: transparent;
+  transition: all 0.2s;
+  border-bottom: 1px solid rgb(237, 240, 242);
+}
+
+.LayerItem:hover {
+  background: #fff;
+}
+
+.isNotVisible > div {
+  color: var(--gray5);
+}
+
+.isNotVisible:hover {
+  color: var(--gray5);
+}
+
+.isSelected {
+  /* content:  */
+}
+
+.isSorting {
+  background: black;
+  border: 1px dashed rgba(167, 182, 194, 0.3);
+}

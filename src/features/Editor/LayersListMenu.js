@@ -35,6 +35,8 @@ import { observable } from "mobx"
 import { PanelMenu } from "../../components/PanelMenu/PanelMenu"
 import { LayerContainer, LayerName, LayerActionIcons } from "./LayersList/LayersList"
 
+import styles from "./LayersListMenu.module.css"
+
 // If the target is a descendant of .LayerActionIcons
 // (meaning it is a layer action), prevent drag/drop sorting.
 const shouldPreventSort = (event) => {
@@ -49,7 +51,7 @@ export const LayersListMenu = observer(() => {
   return (
     <PanelMenu title={menuTitle}>
       <If condition={isLayersEmpty}>
-        <div style={{ width: "100%", height: 32, background: "#F5F6F7" }} />
+        <div style={{ width: "100%", height: 28 }} />
       </If>
       <If condition={!isLayersEmpty}>
         <LayersList
@@ -116,46 +118,43 @@ const useInterval = (condition, handler, alternateHandler, interval) => {
   }, [result])
 }
 
+// TODO: Re-design how deleting works.
+// Long click and layer fades out or some shit.
 const LayerItem = SortableElement((props) => {
-  const { layer } = props
-
   const [holdSeconds, setHoldSeconds] = React.useState(3)
 
-  const eyeIcon = layer.isVisible ? "eye-open" : "eye-off"
-  const eyeColor = layer.isVisible ? "#293742" : "#8A9BA8"
-
   const className = classcat([
-    "LayerItem",
-    !layer.isVisible && "notVisible",
-    props.isSorting && "isSorting",
-    props.isSelected && "isSelected"
+    styles.LayerItem,
+    !props.layer.isVisible && styles.isNotVisible,
+    props.isSorting && styles.isSorting,
+    props.isSelected && styles.isSelected
   ])
 
   const onNameClick = (event) => {
-    layer.isVisible && Store.selectLayer(layer)
+    props.layer.isVisible && Store.selectLayer(props.layer)
   }
 
   const toggleVisibility = (event) => {
     props.isSelected && Store.deselectLayer()
-    layer.toggleIsVisible()
+    props.layer.toggleIsVisible()
   }
 
   useInterval(
-    () => layer.isDeleting,
+    () => props.layer.isDeleting,
     () => setHoldSeconds((n) => n - 1),
     () => setHoldSeconds(3),
     1000
   )
 
   return (
-    <LayerContainer className={className} isSelected={props.isSelected} layerId={layer.id}>
-      <LayerName onClick={onNameClick} name={layer.name} />
+    <LayerContainer className={className} isSelected={props.isSelected} layerId={props.layer.id}>
+      <LayerName onClick={onNameClick} name={props.layer.name} isSelected={props.isSelected} />
       <LayerActionIcons
         toggleVisibility={toggleVisibility}
-        isVisible={layer.isVisible}
-        onStartDeleting={() => layer.setIsDeleting(true)}
-        onFinishDeleting={layer.onDoneDeleting}
-        isDeleting={layer.isDeleting}
+        isVisible={props.layer.isVisible}
+        onStartDeleting={() => props.layer.setIsDeleting(true)}
+        onFinishDeleting={props.layer.onDoneDeleting}
+        isDeleting={props.layer.isDeleting}
         secondsUntilDelete={holdSeconds}
         isSelected={props.isSelected}
       />

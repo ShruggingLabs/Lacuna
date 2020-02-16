@@ -1,4 +1,6 @@
 .PanelMenuContainer {
+  border: 1px solid #c7ced4;
+  background: var(--light-gray5);
 }
 
 .PanelMenuTitle {
@@ -6,6 +8,7 @@
 
 .PanelMenuTitleContainer {
   padding: 8px 12px;
+  background: var(--colorWhite);
 }
 
 .divider {

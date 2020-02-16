@@ -52,7 +52,12 @@ export const LayerContainer = (props) => {
 
 export const LayerName = (props) => {
   const containerClassName = classcat(["LayerNameContainer", styles.LayerNameContainer])
-  const nameClassName = classcat(["LayerName", styles.LayerName])
+
+  const nameClassName = classcat([
+    "LayerName",
+    styles.LayerName,
+    props.isSelected && styles.isSelectedLayerName
+  ])
 
   return (
     <Pane className={containerClassName} onClick={props.onClick} width='100%'>
@@ -66,12 +71,11 @@ export const LayerName = (props) => {
 export const LayerActionIcons = (props) => {
   const className = classcat(["LayerActionIcons", styles.LayerActionIcons])
   const eyeIcon = props.isVisible ? "eye-open" : "eye-off"
-  const eyeColor = props.isSelected ? "#fff" : "#293742"
 
   return (
     <Pane className={className}>
       <Pane width='32px' display='flex' justifyContent='center' alignItems='center'>
-        <Icon icon={eyeIcon} size={16} color={eyeColor} onClick={props.toggleVisibility} />
+        <Icon icon={eyeIcon} size={16} color='#7B8B9A' onClick={props.toggleVisibility} />
       </Pane>
       <ClickNHold time={3} onStart={props.onStartDeleting} onClickNHold={props.onFinishDeleting}>
         <Pane width='32px' display='flex' justifyContent='center' alignItems='center'>
@@ -82,7 +86,7 @@ export const LayerActionIcons = (props) => {
               </Strong>
             </When>
             <Otherwise>
-              <Icon icon='trash' color={eyeColor} size={12} />
+              <Icon icon='trash' color='#7B8B9A' size={12} />
             </Otherwise>
           </Choose>
         </Pane>

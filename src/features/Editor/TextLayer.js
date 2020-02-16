@@ -222,7 +222,7 @@ const InnerTextLayer = observer((props) => {
 
 const TextLayerSelectedOptions = observer((props) => {
   const eyeIcon = props.layer.isVisible ? IconNames.EYE_OPEN : IconNames.EYE_OFF
-  const eyeColor = props.layer.isVisible ? "#293742" : "#8A9BA8"
+  const eyeColor = props.layer.isVisible ? "#7B8B9A" : "#7B8B9A"
 
   const onEditClick = (event) => {
     event.stopPropagation()
@@ -250,11 +250,11 @@ const TextLayerSelectedOptions = observer((props) => {
       className='TextLayerSelectedOptions'
       data-layer-id-tooltip={props.layer.id}
     >
-      <Icon icon={IconNames.EDIT} iconSize={Icon.SIZE_STANDARD} onClick={onEditClick} />
+      <Icon icon={IconNames.EDIT} onClick={onEditClick} />
       <Spacer width='12px' />
-      <Icon icon={eyeIcon} color={eyeColor} iconSize={Icon.SIZE_STANDARD} onClick={onEyeClick} />
+      <Icon icon={eyeIcon} color={eyeColor} onClick={onEyeClick} />
       <Spacer width='12px' />
-      <Icon icon={IconNames.TRASH} iconSize={Icon.SIZE_STANDARD} onClick={onTrashClick} />
+      <Icon icon={IconNames.TRASH} onClick={onTrashClick} />
     </div>
   )
 })
