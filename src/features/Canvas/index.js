@@ -84,7 +84,7 @@ class CanvasComponent extends Component {
                     {layers.map((layer) => {
                       if (layer.type === "image") {
                         return (
-                          <ImageLayer
+                          <CanvasImageLayer
                             layer={layer}
                             onReady={() => Store.setIsLoadingImage(false)}
                             onImageLoaded={forceUpdate}
@@ -94,7 +94,7 @@ class CanvasComponent extends Component {
 
                       if (layer.type === "text") {
                         return (
-                          <TextLayer
+                          <CanvasTextLayer
                             layer={layer}
                             updateParent={forceUpdate}
                             isSelected={Store.isSelected(layer.id)}
@@ -104,7 +104,7 @@ class CanvasComponent extends Component {
 
                       if (layer.type === "box") {
                         return (
-                          <BoxLayer
+                          <CanvasBoxLayer
                             layer={layer}
                             updateParent={forceUpdate}
                             isSelected={Store.isSelected(layer.id)}
@@ -128,7 +128,7 @@ class CanvasComponent extends Component {
 
 export const Canvas = observer(CanvasComponent)
 
-const TextLayer = observer((props) => {
+const CanvasTextLayer = observer((props) => {
   const { layer } = props
   const ref = React.useRef()
 
@@ -188,28 +188,27 @@ const TextLayer = observer((props) => {
   )
 })
 
-const ImageLayer = observer((props) => {
-  const { layer } = props
+const CanvasImageLayer = observer((props) => {
   const ref = React.useRef()
 
   return (
     <CanvasImage
       ref={ref}
       type='image'
-      layer={layer}
+      layer={props.layer}
       onReady={props.onReady}
-      draggable={layer.isVisible && Store.isSelected(layer.id)}
-      isSelected={layer.isVisible && Store.isSelected(layer.id)}
-      visible={layer.isVisible}
-      x={layer.style.left}
-      width={layer.style.width}
-      height={layer.style.height}
-      y={layer.style.top}
-      src={layer.image.fileUrl}
-      id={layer.id}
-      layerId={layer.id}
+      draggable={props.layer.isVisible && Store.isSelected(props.layer.id)}
+      isSelected={props.layer.isVisible && Store.isSelected(props.layer.id)}
+      visible={props.layer.isVisible}
+      x={props.layer.style.left}
+      width={props.layer.style.width}
+      height={props.layer.style.height}
+      y={props.layer.style.top}
+      src={props.layer.image.fileUrl}
+      id={props.layer.id}
+      layerId={props.layer.id}
       onDragEnd={({ target }) => {
-        layer.reposition(target.attrs)
+        props.layer.reposition(target.attrs)
       }}
       onTransform={({ evt, currentTarget }) => {
         currentTarget.setAttrs({
@@ -219,34 +218,33 @@ const ImageLayer = observer((props) => {
         })
       }}
       onTransformEnd={({ target }) => {
-        layer.style.setWidth(Math.floor(target.width()))
-        layer.style.setHeight(Math.floor(target.height()))
+        props.layer.style.setWidth(Math.floor(target.width()))
+        props.layer.style.setHeight(Math.floor(target.height()))
       }}
     />
   )
 })
 
-const BoxLayer = observer((props) => {
-  const { layer } = props
+const CanvasBoxLayer = observer((props) => {
   const ref = React.useRef()
 
   return (
     <Rect
       ref={ref}
       type='box'
-      layer={layer}
-      fill={layer.style.rgbaBackgroundColorString}
-      draggable={layer.isVisible && Store.isSelected(layer.id)}
-      isSelected={layer.isVisible && Store.isSelected(layer.id)}
-      visible={layer.isVisible}
-      x={layer.style.left}
-      width={layer.style.width}
-      height={layer.style.height}
-      y={layer.style.top}
-      id={layer.id}
-      layerId={layer.id}
+      layer={props.layer}
+      fill={props.layer.style.rgbaBackgroundColorString}
+      draggable={props.layer.isVisible && Store.isSelected(props.layer.id)}
+      isSelected={props.layer.isVisible && Store.isSelected(props.layer.id)}
+      visible={props.layer.isVisible}
+      x={props.layer.style.left}
+      width={props.layer.style.width}
+      height={props.layer.style.height}
+      y={props.layer.style.top}
+      id={props.layer.id}
+      layerId={props.layer.id}
       onDragEnd={({ target }) => {
-        layer.reposition(target.attrs)
+        props.layer.reposition(target.attrs)
       }}
       onTransform={({ evt, currentTarget }) => {
         currentTarget.setAttrs({
@@ -256,8 +254,8 @@ const BoxLayer = observer((props) => {
         })
       }}
       onTransformEnd={({ target }) => {
-        layer.style.setWidth(Math.floor(ref.current.width()))
-        layer.style.setHeight(Math.floor(ref.current.height()))
+        props.layer.style.setWidth(Math.floor(ref.current.width()))
+        props.layer.style.setHeight(Math.floor(ref.current.height()))
       }}
     />
   )

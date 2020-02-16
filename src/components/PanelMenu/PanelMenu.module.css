@@ -1,6 +1,7 @@
 .PanelMenuContainer {
   border: 1px solid #c7ced4;
   background: var(--light-gray5);
+  contain: content;
 }
 
 .PanelMenuTitle {

@@ -32,6 +32,7 @@ import {
 import { ColorPicker } from "../../components/ColorPicker"
 import { CapsText } from "../../components/CapsText"
 import { TextInput } from "../../components/TextInput"
+import { withEventValue } from "./../../utilities/withEventValue"
 
 export const TextLayerEditor = observer((props) => {
   const { layer } = props
@@ -50,7 +51,7 @@ export const TextLayerEditor = observer((props) => {
         <TextInput
           placeholder='0px'
           value={layer.style.left}
-          onChange={layer.style.setLeft}
+          onChange={withEventValue(layer.style.setLeft)}
           iconName='arrow-from-right'
           iconHint='X Position'
           type='number'
@@ -60,7 +61,7 @@ export const TextLayerEditor = observer((props) => {
         <TextInput
           placeholder='0px'
           value={layer.style.top}
-          onChange={layer.style.setTop}
+          onChange={withEventValue(layer.style.setTop)}
           iconName='arrow-from-top'
           iconHint='Y Position'
           type='number'
@@ -80,7 +81,7 @@ export const TextLayerEditor = observer((props) => {
         <TextInput
           placeholder='auto'
           value={layer.style.width}
-          onChange={layer.style.setWidth}
+          onChange={withEventValue(layer.style.setWidth)}
           iconName='arrows-resize-h'
           iconHint='Width'
           type='number'
@@ -116,7 +117,7 @@ export const TextLayerEditor = observer((props) => {
           // size='small'
           placeholder='16px'
           value={layer.style.fontSize}
-          onChange={layer.style.setFontSize}
+          onChange={withEventValue(layer.style.setFontSize)}
           iconName='text-size'
           iconHint='Font Size'
           type='number'
@@ -128,7 +129,7 @@ export const TextLayerEditor = observer((props) => {
           // label='Line Height'
           placeholder='100%'
           value={layer.style.lineHeight}
-          onChange={layer.style.setLineHeight}
+          onChange={withEventValue(layer.style.setLineHeight)}
           iconName='line-spacing'
           iconHint='Line Height'
           type='number'
@@ -139,7 +140,7 @@ export const TextLayerEditor = observer((props) => {
         <TextInput
           placeholder='0px'
           value={layer.style.letterSpacing}
-          onChange={layer.style.setLetterSpacing}
+          onChange={withEventValue(layer.style.setLetterSpacing)}
           iconName='arrows-h-alt'
           iconHint='Letter Spacing'
           step={0.1}

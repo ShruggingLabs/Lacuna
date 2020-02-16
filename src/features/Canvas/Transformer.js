@@ -50,7 +50,7 @@ export class Transformer extends React.Component {
   render() {
     return (
       <KTransformer
-        padding={8}
+        padding={0}
         borderEnabled={true}
         // centeredScaling
         // keepRatio

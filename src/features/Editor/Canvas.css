@@ -1,4 +1,5 @@
 #Canvas {
+  contain: content;
   position: relative;
   width: 816px;
   height: 1056px;

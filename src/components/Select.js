@@ -14,9 +14,9 @@ export const Select = (props) => {
     <div className={styles.SelectContainer} title={props.hint} style={containerStyle}>
       <_Select {...selectProps} className={selectClassName}>
         <For each='value' of={options}>
-          <div value={value} key={value}>
+          <option value={value} key={value}>
             {value}
-          </div>
+          </option>
         </For>
       </_Select>
     </div>

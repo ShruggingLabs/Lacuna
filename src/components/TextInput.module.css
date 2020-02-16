@@ -1,5 +1,6 @@
 .TextInputContainer {
   position: relative;
+  contain: content;
 }
 
 .TextInput {
@@ -11,7 +12,7 @@
 
 .TextInput:focus {
   outline: none;
-  border-color: #1070ca;
+  border-color: #1070ca !important;
   box-shadow: 0px 0px 0px 1px #1070ca inset !important;
 }
 

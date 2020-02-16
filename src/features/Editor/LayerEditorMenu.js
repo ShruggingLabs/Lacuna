@@ -1,20 +1,14 @@
-import * as React from "react"
-import { Classes, Menu, MenuDivider, MenuItem } from "@blueprintjs/core"
-import { observer } from "mobx-react"
-import { useStore } from "mobx-store-provider"
+import { Classes, MenuItem } from "@blueprintjs/core"
 import classcat from "classcat"
-import Spacer from "react-spacer"
-
-import Store from "../../state"
-import { FontSize, LineHeight } from "../../components/CustomIcons"
-import { Icon } from "../../components/Icon"
-import { Input } from "../../components/Input"
-import { TextLayerEditor } from "./TextLayerEditor"
-import { BoxLayerEditor } from "./BoxLayerEditor"
-
-import { CapsText } from "../../components/CapsText"
 import { Pane } from "evergreen-ui"
+import { observer } from "mobx-react"
+import * as React from "react"
+import { CapsText } from "../../components/CapsText"
 import { PanelMenu } from "../../components/PanelMenu/PanelMenu"
+import Store from "../../state"
+import { BoxLayerEditor } from "./BoxLayerEditor"
+import { TextLayerEditor } from "./TextLayerEditor"
+import { useKey, useKeyPressEvent } from "react-use"
 
 export const LayerEditorMenu = observer((props) => {
   return (
@@ -27,6 +21,26 @@ export const LayerEditorMenu = observer((props) => {
 
 const LayerEditor = observer((props) => {
   const layer = Store.mainSelectedLayer
+
+  useKey("ArrowLeft", (event) => {
+    const newValue = event.shiftKey ? layer.style.left - 10 : layer.style.left - 1
+    layer.style.setLeft(newValue)
+  })
+
+  useKey("ArrowRight", (event) => {
+    const newValue = event.shiftKey ? layer.style.left + 10 : layer.style.left + 1
+    layer.style.setLeft(newValue)
+  })
+
+  useKey("ArrowUp", (event) => {
+    const newValue = event.shiftKey ? layer.style.top - 10 : layer.style.top - 1
+    layer.style.setTop(newValue)
+  })
+
+  useKey("ArrowDown", (event) => {
+    const newValue = event.shiftKey ? layer.style.top + 10 : layer.style.top + 1
+    layer.style.setTop(newValue)
+  })
 
   return (
     <div className='LayerEditor'>
