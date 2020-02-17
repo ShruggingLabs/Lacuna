@@ -2,13 +2,18 @@ import { autorun } from "mobx"
 import { observer, Observer } from "mobx-react"
 import React, { Component } from "react"
 import Dropzone from "react-dropzone"
-import { Layer, Rect, Stage, Text } from "react-konva"
+import Konva from "konva"
+import { Layer, Rect, Stage, Group, Text } from "react-konva"
 import * as services from "../../services/database"
 import Store from "../../state/index"
 import * as storage from "../../utilities/backend/storage"
+import { scaleCanvas } from "../../utilities/scaleCanvas"
 import { CanvasImage } from "./CanvasImage"
 import { Transformer } from "./Transformer"
 import { CanvasGrid } from "./CanvasGrid"
+import { FastLayer } from "react-konva"
+
+import "./Canvas.css"
 
 class CanvasComponent extends Component {
   dropzoneRef = React.createRef()
@@ -25,6 +30,11 @@ class CanvasComponent extends Component {
       const layerCount = Store.layers.length
       this.forceUpdate()
     })
+
+    if (window.location.href.endsWith("/preview")) {
+      const canvas = document.querySelector("canvas")
+      scaleCanvas(canvas, 816, 1056)
+    }
   }
 
   onImageUpload = async (files) => {
@@ -38,6 +48,7 @@ class CanvasComponent extends Component {
     const uploadsData = await storage.getUploadsData(uploads)
 
     for (const data of uploadsData) {
+      console.log(">>>", data)
       Store.addImageLayer({
         image: data,
         style: {
@@ -76,7 +87,8 @@ class CanvasComponent extends Component {
                   ref={this.stageRef}
                   onClick={this.onCanvasClick}
                 >
-                  <Layer>
+                  <Layer imageSmoothingEnabled={false} imageSmoothingQuality='high'>
+                    <CanvasBackground />
                     <CanvasGrid
                       cellSize={10}
                       isVisible={isCanvasGridVisible}
@@ -170,12 +182,14 @@ const CanvasTextLayer = observer((props) => {
       offsetY={0}
       dragDistance={12}
       wrap='word'
+      opacity={props.layer.style.opacity}
       fill={props.layer.style.rgbaColorString}
       lineHeight={props.layer.style.lineHeight}
       letterSpacing={props.layer.style.letterSpacing}
       fontFamily={props.layer.style.fontFamily}
       fontSize={props.layer.style.fontSize}
       fontStyle={`${props.layer.style.fontWeight} ${props.layer.style.fontStyle}`}
+      fontWeight={props.layer.style.fontWeight}
       width={props.layer.style.width}
       verticalAlign={props.layer.style.verticalAlign}
       align={props.layer.style.align}
@@ -213,6 +227,7 @@ const CanvasImageLayer = observer((props) => {
       type='image'
       layer={props.layer}
       onReady={props.onReady}
+      opacity={props.layer.style.opacity}
       draggable={props.layer.isVisible && Store.isSelected(props.layer.id)}
       isSelected={props.layer.isVisible && Store.isSelected(props.layer.id)}
       visible={props.layer.isVisible}
@@ -255,6 +270,7 @@ const CanvasBoxLayer = observer((props) => {
       ref={ref}
       type='box'
       layer={props.layer}
+      opacity={props.layer.style.opacity}
       fill={props.layer.style.rgbaBackgroundColorString}
       draggable={props.layer.isVisible && Store.isSelected(props.layer.id)}
       isSelected={props.layer.isVisible && Store.isSelected(props.layer.id)}
@@ -272,29 +288,6 @@ const CanvasBoxLayer = observer((props) => {
   )
 })
 
-const getTextLayerProps = (layer) => {
-  const isSelected = Store.isSelected(layer.id)
-
-  const final = {
-    wrap: "word",
-    scaleX: layer.scaleX,
-    scaleY: layer.scaleY,
-    offsetX: 0,
-    offsetY: 0,
-    dragDistance: 12,
-    draggable: true,
-    lineHeight: layer.style.lineHeight,
-    fontSize: layer.style.fontSize,
-    fontStyle: `${layer.style.fontWeight} ${layer.style.fontStyle}`,
-    width: layer.style.width,
-    verticalAlign: layer.style.verticalAlign,
-    align: layer.style.align,
-    name: layer.name,
-    visible: layer.isVisible,
-    text: layer.text,
-    layerId: layer.id,
-    layer: layer
-  }
-
-  return final
+export const CanvasBackground = (props) => {
+  return <Rect fill='#fff' x={0} y={0} width={816} height={1056} />
 }

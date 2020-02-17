@@ -8,6 +8,7 @@ import BoxLayer from "./BoxLayer"
 import { autorun, action, toJS } from "mobx"
 import delay from "delay"
 import { saveProject } from "../../services/database/data/saveProject"
+import { getProject } from "../../services/database/data"
 
 const LayersUnion = types.union(ImageLayer, TextLayer, BoxLayer)
 
@@ -20,7 +21,8 @@ const StoreModel = {
   wasImageRecentlyLoaded: false,
   wasFontRecentlyLoaded: false,
   setWasProjectRecentlySaved: false,
-  isCanvasGridVisible: true
+  isCanvasGridVisible: true,
+  fontsLoaded: 0
 }
 
 const actions = (self) => {
@@ -32,6 +34,10 @@ const actions = (self) => {
 
   const addImageLayer = (layer) => {
     self.layers.push(ImageLayer.create(layer))
+  }
+
+  const addLoadedFont = () => {
+    self.fontsLoaded += 1
   }
 
   const addBoxLayer = () => {
@@ -54,6 +60,7 @@ const actions = (self) => {
   }
 
   const removeLayer = flow(function*(layer) {
+    self.deselectLayer()
     detach(layer)
     yield sleep(500)
     destroy(layer)
@@ -87,6 +94,20 @@ const actions = (self) => {
 
   const afterCreate = () => {
     makeInspectable(self)
+
+    // autorun(() => {
+    //   const layer = self.mainSelectedLayer
+
+    //   const handler = (event) => {
+    //     const selectedLayer = self.mainSelectedLayer
+
+    //     if (!selectedLayer) return
+    //     console.log(event.key, event.code, event.which, selectedLayer, selectedLayer.name)
+    //   }
+
+    //   window.addEventListener("keypress", handler)
+    //   return () => window.removeEventListener("keypress", handler)
+    // })
   }
 
   const toggleCanvasGrid = action(() => {
@@ -107,13 +128,26 @@ const actions = (self) => {
 
   const save = flow(function*() {
     yield saveProject("2Ful8McNxcefAlD23AjrMh", toJS(self.layers))
-    // TODO: Probably handle in component...
     self.setWasProjectRecentlySaved(true)
     yield sleep(2000)
     self.setWasProjectRecentlySaved(false)
   })
 
+  const loadProject = flow(function*(projectId) {
+    const project = yield getProject(projectId)
+
+    console.log("loaded...", { project })
+
+    for (const layer of project.layers) {
+      layer.type === "text" && self.layers.push(TextLayer.create(layer))
+      layer.type === "box" && self.layers.push(BoxLayer.create(layer))
+      layer.type === "image" && self.layers.push(ImageLayer.create(layer))
+    }
+  })
+
   return {
+    addLoadedFont,
+    toggleCanvasGrid,
     onLayerSortingEnd,
     onLayerSortingStart,
     reorderLayer,
@@ -126,8 +160,8 @@ const actions = (self) => {
     selectLayer,
     deselectLayer,
     removeLayer,
+    loadProject,
     save,
-    toggleCanvasGrid,
 
     setWasFontRecentlyLoaded: action((value) => {
       self.wasFontRecentlyLoaded = value
@@ -157,38 +191,6 @@ const views = (self) => {
 
       return Array.from(set)
     },
-
-    // get allFonts() {
-    //   const fonts = self.layers.map((layer) => {
-    //     if (layer.type === "text") {
-    //       return {
-    //         font: layer.style.fontFamily,
-    //         weights: [
-    //           "100",
-    //           "100i",
-    //           "200",
-    //           "200i",
-    //           "300",
-    //           "300i",
-    //           "400",
-    //           "400i",
-    //           "500",
-    //           "500i",
-    //           "600",
-    //           "600i",
-    //           "700",
-    //           "700i",
-    //           "800",
-    //           "800i",
-    //           "900",
-    //           "900i"
-    //         ]
-    //       }
-    //     }
-    //   })
-
-    //   return fonts.filter(Boolean)
-    // },
 
     get reversedLayers() {
       return [...self.layers].reverse()

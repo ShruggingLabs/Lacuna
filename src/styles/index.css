@@ -8,6 +8,7 @@
   -webkit-font-smoothing: antialiased;
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.05);
   letter-spacing: 0px;
+  -webkit-print-color-adjust: exact;
 }
 
 :root {
@@ -228,7 +229,7 @@ body {
 }
 
 .CanvasControlPanel {
-  width: 340px;
+  width: 380px;
   height: calc(100vh - 96px - 48px);
   max-height: 1056px;
   display: flex;
@@ -242,9 +243,10 @@ body {
 .LeftMenuColumn {
   display: flex;
   flex-direction: column;
-  width: 240px;
-  max-width: 240px;
-  min-width: 240px;
+  width: 280px;
+  max-width: 280px;
+  min-width: 280px;
+  margin-right: 24px;
 }
 
 .LayerEditorMenu {
@@ -408,7 +410,7 @@ input[type="number"] {
   max-height: 30px;
 }
 
-.Gen3SelectPopover .bp3-button-text .Gen3Icon {
+.Gen3SelectPopover .bp3-button-text .LacunaIcon {
   position: absolute;
   left: 0px;
   top: -1px;

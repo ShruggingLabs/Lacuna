@@ -24,3 +24,11 @@
   background: black;
   border: 1px dashed rgba(167, 182, 194, 0.3);
 }
+
+.isLocked > div {
+  color: var(--gray5);
+}
+
+.isLocked:hover {
+  color: var(--gray5);
+}

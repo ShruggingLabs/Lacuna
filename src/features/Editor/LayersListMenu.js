@@ -1,41 +1,14 @@
-import ClickNHold from "react-click-n-hold"
-import * as React from "react"
-import { Classes, Menu, MenuDivider, MenuItem } from "@blueprintjs/core"
-import { observer, Observer } from "mobx-react"
-import { useStore } from "mobx-store-provider"
-import { SortableContainer, SortableElement, SortableHandle } from "react-sortable-hoc"
-import { Icon } from "../../components/Icon"
-import Spacer from "react-spacer"
-
-import {
-  Icon as EIcon,
-  Pane,
-  Label,
-  Textarea,
-  TextInput,
-  Text,
-  Badge,
-  Strong,
-  Select,
-  Popover,
-  Position,
-  Positioner,
-  Tooltip,
-  IconButton,
-  Pill,
-  Spinner,
-  Card,
-  Heading
-} from "evergreen-ui"
-
-import Store from "../../state"
-import getValue from "get-value"
+import { Classes } from "@blueprintjs/core"
 import classcat from "classcat"
-import { observable } from "mobx"
+import { Pane } from "evergreen-ui"
+import { observer, Observer } from "mobx-react"
+import * as React from "react"
+import { SortableContainer, SortableElement } from "react-sortable-hoc"
 import { PanelMenu } from "../../components/PanelMenu/PanelMenu"
-import { LayerContainer, LayerName, LayerActionIcons } from "./LayersList/LayersList"
-
+import Store from "../../state"
+import { LayerActionIcons, LayerContainer, LayerName } from "./LayersList/LayersList"
 import styles from "./LayersListMenu.module.css"
+import { DocumentToolsMenu } from "./DocumentToolsMenu"
 
 // If the target is a descendant of .LayerActionIcons
 // (meaning it is a layer action), prevent drag/drop sorting.
@@ -44,12 +17,12 @@ const shouldPreventSort = (event) => {
 }
 
 export const LayersListMenu = observer(() => {
-  const store = useStore()
-  const isLayersEmpty = store.layers.length === 0
-  const menuTitle = `Layers (${store.layers.length})`
+  const isLayersEmpty = Store.layers.length === 0
+  const menuTitle = `Layers` //(${Store.layers.length})`
 
   return (
     <PanelMenu title={menuTitle} titleIcon='layers'>
+      <DocumentToolsMenu />
       <If condition={isLayersEmpty}>
         <div style={{ width: "100%", height: 28 }} />
       </If>
@@ -91,6 +64,7 @@ const LayersList = SortableContainer(
                 isDeleting={layer.isDeleting}
                 isSelected={Store.isSelected(layer.id)}
                 isVisible={layer.isVisible}
+                isLocked={layer.isLocked}
                 index={index}
                 key={layer.id}
               />
@@ -121,17 +95,16 @@ const useInterval = (condition, handler, alternateHandler, interval) => {
 // TODO: Re-design how deleting works.
 // Long click and layer fades out or some shit.
 const LayerItem = SortableElement((props) => {
-  const [holdSeconds, setHoldSeconds] = React.useState(3)
-
   const className = classcat([
     styles.LayerItem,
-    !props.layer.isVisible && styles.isNotVisible,
+    props.isLocked && styles.isLocked,
+    !props.isVisible && styles.isNotVisible,
     props.isSorting && styles.isSorting,
     props.isSelected && styles.isSelected
   ])
 
   const onNameClick = (event) => {
-    props.layer.isVisible && Store.selectLayer(props.layer)
+    props.layer.isVisible && !props.layer.isLocked && Store.selectLayer(props.layer)
   }
 
   const toggleVisibility = (event) => {
@@ -139,25 +112,33 @@ const LayerItem = SortableElement((props) => {
     props.layer.toggleIsVisible()
   }
 
-  useInterval(
-    () => props.layer.isDeleting,
-    () => setHoldSeconds((n) => n - 1),
-    () => setHoldSeconds(3),
-    1000
-  )
+  const toggleIsLocked = (event) => {
+    props.isSelected && Store.deselectLayer()
+    props.layer.toggleIsLocked()
+  }
 
   return (
-    <LayerContainer className={className} isSelected={props.isSelected} layerId={props.layer.id}>
-      <LayerName onClick={onNameClick} name={props.layer.name} isSelected={props.isSelected} />
-      <LayerActionIcons
-        toggleVisibility={toggleVisibility}
-        isVisible={props.layer.isVisible}
-        onStartDeleting={() => props.layer.setIsDeleting(true)}
-        onFinishDeleting={props.layer.onDoneDeleting}
-        isDeleting={props.layer.isDeleting}
-        secondsUntilDelete={holdSeconds}
-        isSelected={props.isSelected}
-      />
-    </LayerContainer>
+    <Observer>
+      {() => (
+        <LayerContainer
+          className={className}
+          isSelected={props.isSelected}
+          layerId={props.layer.id}
+        >
+          <LayerName
+            onClick={onNameClick}
+            name={props.layer.name}
+            isSelected={props.isSelected}
+          />
+          <LayerActionIcons
+            toggleVisibility={toggleVisibility}
+            toggleIsLocked={toggleIsLocked}
+            isLocked={props.isLocked}
+            isVisible={props.isVisible}
+            isSelected={props.isSelected}
+          />
+        </LayerContainer>
+      )}
+    </Observer>
   )
 })

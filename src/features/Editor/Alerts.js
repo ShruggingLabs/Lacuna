@@ -1,15 +1,8 @@
-import * as React from "react"
-import { Alert, Text, Spinner, InlineAlert, Pane, Button, Badge, Icon } from "evergreen-ui"
-
-// import { Classes, Icon, Menu, MenuDivider, MenuItem, Collapse } from '@blueprintjs/core'
-// import { observer } from 'mobx-react'
-// import { useStore } from 'mobx-store-provider'
-
-import { LayersListMenu } from "./LayersListMenu"
-import { DocumentToolsMenu } from "./DocumentToolsMenu"
-import Store from "../../state"
+import { Icon, Pane, Spinner, Text } from "evergreen-ui"
 import { observer } from "mobx-react"
+import * as React from "react"
 import Spacer from "react-spacer"
+import Store from "../../state"
 
 export const Alerts = observer((props) => {
   return null

@@ -5,11 +5,12 @@
 }
 
 .PanelMenuTitle {
+  color: var(--colorGrayscale1);
 }
 
 .PanelMenuTitleContainer {
   padding: 8px 12px;
-  background: var(--colorWhite);
+  background: var(--colorBlack);
   display: flex;
   align-items: center;
 }

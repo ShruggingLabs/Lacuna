@@ -6,8 +6,6 @@
 .TextInput {
   border: 1px solid var(--gray5);
   box-shadow: none;
-  padding-right: 28px;
-  text-align: right;
 }
 
 .TextInput:focus {
@@ -16,13 +14,24 @@
   box-shadow: 0px 0px 0px 1px #1070ca inset !important;
 }
 
+.TextInput.minimalVariant {
+  padding: 0 28px;
+  text-align: right;
+}
+
 .leadingIcon {
+  color: rgba(67, 90, 111, 0.3);
   position: absolute;
-  left: 2px;
-  top: 6px;
   z-index: 10;
+  left: 7px;
+  top: 9px;
   font-size: 18px;
   height: 100%;
+}
+
+:global(._unicon).leadingIcon {
+  left: 3px;
+  top: 6px;
 }
 
 .tagText {
@@ -36,7 +45,7 @@
   color: rgba(67, 90, 111, 0.3);
 }
 
-.TextInputContainer:hover i,
-.TextInputContainer:hover i {
+.TextInputContainer:hover .leadingIcon,
+.TextInputContainer:hover .leadingIcon {
   color: #7b8b9a;
 }

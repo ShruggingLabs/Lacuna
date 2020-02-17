@@ -8,8 +8,6 @@ import { LayersListMenu } from "./LayersListMenu"
 export const LeftMenuColumn = observer((props) => {
   return (
     <div className='LeftMenuColumn'>
-      <DocumentToolsMenu />
-      <Spacer height='12px' />
       <LayersListMenu />
       <Spacer height='24px' />
       <Alerts />

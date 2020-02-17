@@ -1,45 +1,14 @@
-import ClickNHold from "react-click-n-hold"
+import { Heading, Pane } from "evergreen-ui"
 import * as React from "react"
-import { Classes, Menu, MenuDivider, MenuItem } from "@blueprintjs/core"
-import { observer, Observer } from "mobx-react"
-import { useStore } from "mobx-store-provider"
-import { SortableContainer, SortableElement, SortableHandle } from "react-sortable-hoc"
-import { Icon } from "../../components/Icon"
 import Spacer from "react-spacer"
-
-import {
-  Icon as EIcon,
-  Pane,
-  Label,
-  Textarea,
-  TextInput,
-  Text,
-  Badge,
-  Strong,
-  Select,
-  Popover,
-  Position,
-  Positioner,
-  Tooltip,
-  IconButton,
-  Pill,
-  Spinner,
-  Card,
-  Heading
-} from "evergreen-ui"
-
-import Store from "../../state"
-import getValue from "get-value"
-import classcat from "classcat"
-import { observable } from "mobx"
-
+import { Icon } from "../../components/Icon"
 import styles from "./PanelMenu.module.css"
 
 const PanelMenuTitle = (props) => {
   return (
     <Pane className={styles.PanelMenuTitleContainer}>
       <If condition={props.icon}>
-        <Icon.Evergreen icon={props.icon} size='14px' color='var(--colorGrayscale5)' />
+        <Icon icon={props.icon} size='14px' color='var(--colorGrayscale5)' />
         <Spacer width='12px' />
       </If>
       <Heading size={400} color='var(--colorGrayscale12)' className={styles.PanelMenuTitle}>
@@ -67,7 +36,6 @@ export const PanelMenu = (props) => {
   return (
     <PanelMenuContainer>
       <PanelMenuTitle title={props.title} icon={props.titleIcon} />
-      <div className={styles.divider} />
       {props.children}
     </PanelMenuContainer>
   )

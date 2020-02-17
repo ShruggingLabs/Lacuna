@@ -23,6 +23,7 @@ const model = {
 const actions = (self) => {
   const leftMinMax = minMax(0, 816)
   const topMinMax = minMax(0, 1056)
+  const sizeMinMax = minMax(1, 1056)
 
   const setTop = (value) => {
     self.top = Math.round(topMinMax(Number(value)))
@@ -32,9 +33,9 @@ const actions = (self) => {
     self.left = Math.round(leftMinMax(Number(value)))
   }
 
-  const setWidth = (value) => (self.width = Math.round(Number(value)))
-  const setHeight = (value) => (self.height = Math.round(Number(value)))
-  const setOpacity = (value) => (self.opacity = Math.round(Number(value)))
+  const setWidth = (value) => (self.width = Math.round(sizeMinMax(Number(value))))
+  const setHeight = (value) => (self.height = Math.round(sizeMinMax(Number(value))))
+  const setOpacity = (value) => (self.opacity = Number(Number.parseFloat(value).toFixed(1)))
   const setBackgroundColor = (value) => (self.backgroundColor = value)
   const afterCreate = () => {}
 

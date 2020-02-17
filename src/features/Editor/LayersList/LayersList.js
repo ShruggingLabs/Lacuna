@@ -1,42 +1,11 @@
-import ClickNHold from "react-click-n-hold"
-import * as React from "react"
-import { Classes, Menu, MenuDivider, MenuItem } from "@blueprintjs/core"
-import { observer, Observer } from "mobx-react"
-import { useStore } from "mobx-store-provider"
-import { SortableContainer, SortableElement, SortableHandle } from "react-sortable-hoc"
-// import { Icon } from "../../../components/Icon"
-import Spacer from "react-spacer"
-
-import {
-  Icon,
-  Pane,
-  Label,
-  Textarea,
-  TextInput,
-  Text,
-  Badge,
-  Strong,
-  Select,
-  Popover,
-  Position,
-  Positioner,
-  Tooltip,
-  IconButton,
-  Pill,
-  Spinner,
-  Card,
-  Heading
-} from "evergreen-ui"
-
-import Store from "../../../state"
-import getValue from "get-value"
 import classcat from "classcat"
-import { observable } from "mobx"
-
+import { Icon, Pane, Strong, Text } from "evergreen-ui"
+import * as React from "react"
+import ClickNHold from "react-click-n-hold"
 import styles from "./LayersList.module.css"
+import { Unicon } from "../../../components/Icon"
 
 export const LayerContainer = (props) => {
-  console.log({ props })
   return (
     <Pane
       position='relative'
@@ -71,26 +40,25 @@ export const LayerName = (props) => {
 export const LayerActionIcons = (props) => {
   const className = classcat(["LayerActionIcons", styles.LayerActionIcons])
   const eyeIcon = props.isVisible ? "eye-open" : "eye-off"
+  const lockIcon = props.isLocked ? "lock" : "unlock"
 
   return (
     <Pane className={className}>
-      <Pane width='32px' display='flex' justifyContent='center' alignItems='center'>
-        <Icon icon={eyeIcon} size={16} color='#7B8B9A' onClick={props.toggleVisibility} />
+      <Pane width='28px' display='flex' justifyContent='center' alignItems='center'>
+        <Icon icon={eyeIcon} size={16} color='var(--gray5)' onClick={props.toggleVisibility} />
       </Pane>
-      <ClickNHold time={3} onStart={props.onStartDeleting} onClickNHold={props.onFinishDeleting}>
-        <Pane width='32px' display='flex' justifyContent='center' alignItems='center'>
-          <Choose>
-            <When condition={props.isDeleting}>
-              <Strong color='#EC4C47' height='16px' lineHeight='120%'>
-                {props.secondsUntilDelete}
-              </Strong>
-            </When>
-            <Otherwise>
-              <Icon icon='trash' color='#7B8B9A' size={12} />
-            </Otherwise>
-          </Choose>
-        </Pane>
-      </ClickNHold>
+      <Pane
+        width='28px'
+        height='16px'
+        marginRight={8}
+        marginBottom={1}
+        paddingBottom={1}
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+      >
+        <Icon icon={lockIcon} color='var(--gray5)' size={15} onClick={props.toggleIsLocked} />
+      </Pane>
     </Pane>
   )
 }

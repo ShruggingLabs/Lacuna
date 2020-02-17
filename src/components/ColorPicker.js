@@ -1,35 +1,7 @@
-import * as React from "react"
-import { Classes, Menu, MenuDivider, MenuItem, Divider } from "@blueprintjs/core"
-import { observer } from "mobx-react"
-import { useStore } from "mobx-store-provider"
-import classcat from "classcat"
-import Spacer from "react-spacer"
-
-import { ChromePicker } from "react-color"
-
-import Store from "../state"
-import { Icon } from "./Icon"
-import { Input } from "./Input"
-
 import { Button } from "@blueprintjs/core"
-// import { Select } from "@blueprintjs/select"
-import { fontsManager } from "../utilities/fontsManager"
-
-import {
-  Pane,
-  Label,
-  Textarea,
-  TextInput,
-  Text,
-  Badge,
-  Strong,
-  Select,
-  Popover,
-  Position,
-  Positioner,
-  Tooltip,
-  IconButton
-} from "evergreen-ui"
+import { Pane, Popover, Position, Text } from "evergreen-ui"
+import * as React from "react"
+import { SketchPicker } from "react-color"
 
 export const ColorPicker = (props) => {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -38,7 +10,8 @@ export const ColorPicker = (props) => {
     width: "36px",
     height: "14px",
     borderRadius: "2px",
-    background: props.currentColor
+    background: props.currentColor,
+    border: "1px solid var(--colorGrayscale3)"
   }
 
   return (
@@ -47,7 +20,7 @@ export const ColorPicker = (props) => {
         position={Position.BOTTOM_RIGHT}
         content={
           <Pane border='1px solid red'>
-            <ChromePicker
+            <SketchPicker
               width={240}
               color={props.currentColor}
               onChange={(event) => props.onChange(event.rgb)}

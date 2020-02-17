@@ -4,7 +4,7 @@
   justify-content: space-evenly;
   height: 36px;
   width: 100%;
-  background: var(--colorBlack);
+  background: var(--black);
 }
 
 .icon {

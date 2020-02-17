@@ -4,10 +4,16 @@
 
 .LayerName {
   user-select: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  max-width: 180px;
 }
 
 .isSelectedLayerName {
-  font-weight: 700;
+  font-weight: 900;
+  font-style: italic;
   color: #1070ca;
 }
 

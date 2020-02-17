@@ -9,37 +9,21 @@ import "./styles/blueprint.css"
 import "./styles/blueprint-icons.css"
 import "./styles/index.css"
 
-import { ThemeProvider, defaultTheme, Pane } from "evergreen-ui"
+import { TopBar } from "./components/TopBar"
 
-export default function App() {
-  const Provider = useProvider()
-  const store = createStore(() => Store)
+import { ThemeProvider, defaultTheme, Pane } from "evergreen-ui"
+import { Router } from "./Router"
+import { useGoogleFontLoader } from "./state/useGoogleFontLoader"
+import { observer } from "mobx-react"
+
+const App = observer((props) => {
+  useGoogleFontLoader()
+
   return (
     <ThemeProvider value={defaultTheme}>
-      <Provider value={store}>
-        <div className='ProjectEditor'>
-          <TopBar />
-          <Editor />
-        </div>
-      </Provider>
+      <Router />
     </ThemeProvider>
   )
-}
+})
 
-const TopBar = (props) => {
-  return (
-    <div className='TopBar'>
-      <Pane
-        display='flex'
-        justifyContent='center'
-        alignItems='center'
-        paddingX='24px'
-        // backgroundColor='rgba(54, 174, 232, 0.16)'
-        borderRight='1px solid var(--colorGrayscale2)'
-        height='100%'
-      >
-        <img src='images/lacuna-logo-mark-0.svg' style={{ maxWidth: 30 }} />
-      </Pane>
-    </div>
-  )
-}
+export default App

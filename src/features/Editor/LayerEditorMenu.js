@@ -1,15 +1,11 @@
-import { Classes, MenuItem } from "@blueprintjs/core"
-import classcat from "classcat"
-import { Pane } from "evergreen-ui"
+import { Classes } from "@blueprintjs/core"
 import { observer } from "mobx-react"
 import * as React from "react"
-import { CapsText } from "../../components/CapsText"
 import { PanelMenu } from "../../components/PanelMenu/PanelMenu"
 import Store from "../../state"
-import { BoxLayerEditor } from "./BoxLayerEditor"
-import { TextLayerEditor } from "./TextLayerEditor"
-import { useKey, useKeyPressEvent } from "react-use"
-import { ImageLayerEditor } from "./ImageLayerEditor"
+import { BoxLayerEditor } from "./LayerEditorPanel/BoxLayerEditor"
+import { ImageLayerEditor } from "./LayerEditorPanel/ImageLayerEditor"
+import { TextLayerEditor } from "./LayerEditorPanel/TextLayerEditor"
 
 export const LayerEditorMenu = observer((props) => {
   const selectedLayer = Store.mainSelectedLayer
@@ -23,62 +19,26 @@ export const LayerEditorMenu = observer((props) => {
   )
 })
 
-const isAnInputFocused = () => {
-  return document.querySelector("input:focus")
-}
-
-const LayerEditor = (props) => {
-  const { layer } = props
-
-  useKey("ArrowLeft", (event) => {
-    if (isAnInputFocused()) return
-    const newValue = event.shiftKey ? layer.style.left - 10 : layer.style.left - 1
-    layer.style.setLeft(newValue)
-  })
-
-  useKey("ArrowRight", (event) => {
-    if (isAnInputFocused()) return
-    const newValue = event.shiftKey ? layer.style.left + 10 : layer.style.left + 1
-    layer.style.setLeft(newValue)
-  })
-
-  useKey("ArrowUp", (event) => {
-    if (isAnInputFocused()) return
-    const newValue = event.shiftKey ? layer.style.top - 10 : layer.style.top - 1
-    layer.style.setTop(newValue)
-  })
-
-  useKey("ArrowDown", (event) => {
-    if (isAnInputFocused()) return
-    const newValue = event.shiftKey ? layer.style.top + 10 : layer.style.top + 1
-    layer.style.setTop(newValue)
-  })
-
-  useKey("Delete", (event) => {
-    console.log("delete...", event.key)
-    if (isAnInputFocused()) return
-    layer.trash()
-  })
-
+const LayerEditor = observer((props) => {
   return (
     <div className='LayerEditor'>
       <Choose>
-        <When condition={layer.type === "text"}>
-          <TextLayerEditor layer={layer} />
+        <When condition={props.layer.type === "text"}>
+          <TextLayerEditor layer={props.layer} />
         </When>
-        <When condition={layer.type === "box"}>
-          <BoxLayerEditor layer={layer} />
+        <When condition={props.layer.type === "box"}>
+          <BoxLayerEditor layer={props.layer} />
         </When>
-        <When condition={layer.type === "image"}>
-          <ImageLayerEditor layer={layer} />
+        <When condition={props.layer.type === "image"}>
+          <ImageLayerEditor layer={props.layer} />
         </When>
       </Choose>
     </div>
   )
-}
+})
 
 const NoLayerSelectedText = (
-  <div style={{ padding: 8, paddingBottom: 0 }}>
+  <div style={{ padding: 12, paddingBottom: 0 }}>
     <p className={Classes.TEXT_MUTED}>No layer selected.</p>
   </div>
 )

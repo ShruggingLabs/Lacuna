@@ -30,7 +30,7 @@ const useGrid = (options) => {
             width={options.cellSize}
             height={options.cellSize}
             stroke={options.strokeColor}
-            strokeWidth={0.5}
+            strokeWidth={1}
             strokeScaleEnabled={false}
             visible={options.isVisible}
             points={[0, 1056, 0, 0]}
@@ -49,15 +49,13 @@ const useGrid = (options) => {
             width={options.cellSize}
             height={options.cellSize}
             stroke={options.strokeColor}
-            strokeWidth={0.5}
+            strokeWidth={1}
             strokeScaleEnabled={false}
             visible={options.isVisible}
             points={[0, 0, 816, 0]}
           />
         )
       })
-
-    console.log({ xLines, yLines })
 
     setGrid({ xLines, yLines })
   }, [options.cellSize])
@@ -67,7 +65,6 @@ const useGrid = (options) => {
 
 export const CanvasGrid = observer((props) => {
   const grid = useGrid(props)
-
   return props.isVisible ? <Group children={[...grid.xLines, ...grid.yLines]} /> : null
 })
 

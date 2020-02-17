@@ -34,6 +34,7 @@ const actions = (self) => {
     self.fontWeight = "400"
   }
 
+  const setAlign = (value) => (self.align = value)
   const setFontWeight = withEventValue((value) => (self.fontWeight = value))
   const setFontStyle = withEventValue((value) => (self.fontStyle = value))
   const setLineHeight = withEventValue((value) => (self.lineHeight = Number(value)))
@@ -41,6 +42,7 @@ const actions = (self) => {
   const setIsLoadingFont = action((value) => (self.isLoadingFont = value))
 
   return {
+    setAlign,
     setColor,
     setFontSize,
     setFontWeight,

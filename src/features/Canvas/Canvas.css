@@ -1,0 +1,38 @@
+#Canvas {
+  contain: content;
+  position: relative;
+  width: 816px;
+  height: 1056px;
+  display: flex;
+  background: #ffffff;
+  background: var(--white);
+  /* box-shadow: 0 4px 8px rgba(16, 22, 26, 0.02); */
+  box-shadow: 0 4px 18px rgba(16, 22, 26, 0.03);
+  border: 1px solid #c7ced4;
+  image-rendering: -moz-crisp-edges; /* Firefox */
+  image-rendering: -webkit-crisp-edges; /* Webkit (Safari) */
+  image-rendering: pixelated; /* Chrome */
+}
+
+#Preview #Canvas {
+  box-shadow: unset;
+  border: unset;
+}
+
+.CanvasContainer {
+  image-rendering: -moz-crisp-edges; /* Firefox */
+  image-rendering: -webkit-crisp-edges; /* Webkit (Safari) */
+  image-rendering: pixelated; /* Chrome */
+}
+
+.CanvasContainer:focus {
+  outline: none;
+}
+
+#Canvas canvas {
+  background: #fff;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}

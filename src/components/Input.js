@@ -85,7 +85,7 @@ const LabelIcon = (props) => {
     height: "100%"
   }
 
-  return <Icon name={props.tagIcon} hint={props.tagIconHint} style={style} />
+  return <Icon icon={props.tagIcon} hint={props.tagIconHint} style={style} />
 }
 
 const VerticalWrapper = (props) => {
