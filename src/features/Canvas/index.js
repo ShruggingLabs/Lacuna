@@ -34,6 +34,7 @@ class CanvasComponent extends Component {
     if (window.location.href.endsWith("/preview")) {
       const canvas = document.querySelector("canvas")
       scaleCanvas(canvas, 816, 1056)
+      this.forceUpdate()
     }
   }
 

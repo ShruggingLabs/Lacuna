@@ -21,6 +21,7 @@ body {
   height: 100vh;
   font-family: var(--fontBody);
   color: var(--colorBlack);
+  overflow-x: hidden;
 }
 
 .📦fnt-fam_b77syt {
