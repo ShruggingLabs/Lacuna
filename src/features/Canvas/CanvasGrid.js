@@ -4,9 +4,9 @@ import { observer, Observer } from "mobx-react"
 import nanoid from "nanoid"
 import Store from "../../state/index"
 
-const TOTAL_CANVAS_PIXELS = 816 * 1056
-const CANVAS_WIDTH = 816
-const CANVAS_HEIGHT = 1056
+const TOTAL_CANVAS_PIXELS = 2550 * 3300
+const CANVAS_WIDTH = 2550
+const CANVAS_HEIGHT = 3300
 
 const useGrid = (options) => {
   const [grid, setGrid] = React.useState({
@@ -33,7 +33,7 @@ const useGrid = (options) => {
             strokeWidth={1}
             strokeScaleEnabled={false}
             visible={options.isVisible}
-            points={[0, 1056, 0, 0]}
+            points={[0, 3300, 0, 0]}
           />
         )
       })
@@ -52,7 +52,7 @@ const useGrid = (options) => {
             strokeWidth={1}
             strokeScaleEnabled={false}
             visible={options.isVisible}
-            points={[0, 0, 816, 0]}
+            points={[0, 0, 2550, 0]}
           />
         )
       })
@@ -76,8 +76,8 @@ export const CanvasGrid = observer((props) => {
 // stroke="black"
 // x={0}
 // y={0}
-// width={816}
-// height={1056}
+// width={2550}
+// height={3300}
 // fill='#fff'
 // stroke='#ddd'
 // strokeWidth={1}

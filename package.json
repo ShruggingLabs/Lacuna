@@ -89,6 +89,7 @@
     "sass-loader": "7.1.0",
     "semver": "6.0.0",
     "sleepjs": "^3.0.1",
+    "store": "npm:@fabiospampinato/store",
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "1.2.3",
     "ts-pnp": "1.1.2",
@@ -102,6 +103,7 @@
     "wouter": "^2.4.0"
   },
   "devDependencies": {
+    "babel-plugin-module-resolver": "^4.0.0",
     "typescript": "3.3.3"
   },
   "scripts": {
@@ -165,7 +167,23 @@
       "react-app"
     ],
     "plugins": [
-      "jsx-control-statements"
+      "jsx-control-statements",
+      [
+        "module-resolver",
+        {
+          "root": [
+            "./"
+          ],
+          "alias": {
+            "#state": "./src/state",
+            "#components": "./src/components",
+            "#features": "./src/features",
+            "#services": "./src/services",
+            "#styles": "./src/styles",
+            "#utilities": "./src/utilities"
+          }
+        }
+      ]
     ]
   },
   "eslintConfig": {

@@ -33,7 +33,7 @@ class CanvasComponent extends Component {
 
     if (window.location.href.endsWith("/preview")) {
       const canvas = document.querySelector("canvas")
-      scaleCanvas(canvas, 816, 1056)
+      scaleCanvas(canvas, 2550, 3300)
       this.forceUpdate()
     }
   }
@@ -49,7 +49,6 @@ class CanvasComponent extends Component {
     const uploadsData = await storage.getUploadsData(uploads)
 
     for (const data of uploadsData) {
-      console.log(">>>", data)
       Store.addImageLayer({
         image: data,
         style: {
@@ -81,8 +80,8 @@ class CanvasComponent extends Component {
                 })}
               >
                 <Stage
-                  width={816}
-                  height={1056}
+                  width={2550}
+                  height={3300}
                   scaleX={1}
                   scaleY={1}
                   ref={this.stageRef}
@@ -91,7 +90,7 @@ class CanvasComponent extends Component {
                   <Layer imageSmoothingEnabled={false} imageSmoothingQuality='high'>
                     <CanvasBackground />
                     <CanvasGrid
-                      cellSize={10}
+                      cellSize={25}
                       isVisible={isCanvasGridVisible}
                       strokeColor='#36AEE8'
                     />
@@ -290,5 +289,5 @@ const CanvasBoxLayer = observer((props) => {
 })
 
 export const CanvasBackground = (props) => {
-  return <Rect fill='#fff' x={0} y={0} width={816} height={1056} />
+  return <Rect fill='#fff' x={0} y={0} width={2550} height={3300} />
 }

@@ -1,7 +1,7 @@
-.DocumentToolsMenu {
+.DocumentControlPanelToolBar {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-evenly;
   height: 36px;
   width: 100%;
   background: var(--black);

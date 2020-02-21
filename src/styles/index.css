@@ -28,6 +28,10 @@ body {
   font-family: var(--fontBody);
 }
 
+[data-selected-layer="true"] {
+  outline: 2px solid var(--blue3);
+}
+
 :root {
   --black: #1d2329;
 
@@ -221,18 +225,18 @@ body {
 }
 
 .Canvas {
-  width: 816px;
-  height: 1056px;
+  width: 2550px;
+  height: 3300px;
   display: flex;
   background: var(--white);
   box-shadow: var(--elevation1);
   margin-left: 24px;
 }
 
-.CanvasControlPanel {
+.DocumentControlPanel {
   width: 380px;
   height: calc(100vh - 96px - 48px);
-  max-height: 1056px;
+  max-height: 3300px;
   display: flex;
   flex-direction: column;
   margin-left: 24px;
@@ -260,10 +264,17 @@ body {
 }
 
 .LayerEditor {
+  position: relative;
   padding: 8px 12px;
   padding-bottom: 12px;
   display: flex;
   flex-direction: column;
+}
+
+[evergreen-portal-container] {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .LayerEditor .inputRow {

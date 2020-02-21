@@ -5,7 +5,7 @@ const puppeteer = require("puppeteer")
   await page.goto("http://localhost:3000/projects/2Ful8McNxcefAlD23AjrMh/preview")
   await page.waitFor(3000)
   await page.emulateMedia("screen")
-  const pdf = await page.pdf({ path: "PDF.pdf", width: "816px", height: "1056px", scale: 1 })
+  const pdf = await page.pdf({ path: "PDF.pdf", width: "2550px", height: "3300px", scale: 1 })
 
   await browser.close()
 })()

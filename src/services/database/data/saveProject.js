@@ -1,4 +1,4 @@
-import { updateProject } from "."
+import { updateProject } from "./"
 
 export const normalizeLayers = (layers) => {
   return layers.map((layer) => {

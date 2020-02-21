@@ -1,12 +1,12 @@
-const DOCUMENT_WIDTH = 816
+const DOCUMENT_WIDTH = 2550
 const DOCUMENT_HEIGHT = 1065
 
 const getImage = (url) => {
-  const image = document.createElement('img')
+  const image = document.createElement("img")
 
   return new Promise((resolve) => {
-    image.setAttribute('src', url)
-    image.addEventListener('load', () => {
+    image.setAttribute("src", url)
+    image.addEventListener("load", () => {
       resolve(image)
     })
   })
@@ -30,7 +30,7 @@ export const getFileImageData = async (file) => {
     filePath: file.filePath,
     styleOriginalHeight: image.height,
     styleOriginalWidth: image.width,
-    styleHeightRatio: heightRatio,
+    styleHeightRatio: heightRatio
   }
 }
 
@@ -57,6 +57,6 @@ const getExhaustiveMetadata = (image) => {
     originalInchesHeight: String(originalInchesHeight),
     percentWidth: String(originalPercentWidth),
     percentHeight: String(originalPercentHeight),
-    size: String(file.size),
+    size: String(file.size)
   }
 }

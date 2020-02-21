@@ -7,14 +7,18 @@ import styles from "./DocumentToolsMenu.module.css"
 import { Icon } from "../../components/Icon"
 import Store from "../../state"
 import { saveAs } from "file-saver"
+import Spacer from "react-spacer"
 
 export const DocumentToolsMenu = observer((props) => {
   const isCanvasGridVisible = Store.isCanvasGridVisible
 
   return (
     <Pane className={styles.DocumentToolsMenu}>
+      <Spacer width='12px' />
+
       <Pane display='flex' justifyContent='center' alignItems='center' width='36px' height='36px'>
         <Icon
+          iconSize='14px'
           className={styles.icon}
           icon='paragraph'
           title='Add Text Layer'
@@ -23,8 +27,11 @@ export const DocumentToolsMenu = observer((props) => {
         />
       </Pane>
 
+      <Spacer width='12px' />
+
       <Pane display='flex' justifyContent='center' alignItems='center' width='36px' height='36px'>
         <Icon
+          iconSize='14px'
           className={styles.icon}
           icon='widget'
           title='Add Box Layer'
@@ -33,8 +40,11 @@ export const DocumentToolsMenu = observer((props) => {
         />
       </Pane>
 
+      <Spacer width='12px' />
+
       <Pane display='flex' justifyContent='center' alignItems='center' width='36px' height='36px'>
         <Icon
+          iconSize='14px'
           className={styles.icon + " " + styles.disabledIcon}
           disabled
           icon='media'
@@ -44,25 +54,7 @@ export const DocumentToolsMenu = observer((props) => {
         />
       </Pane>
 
-      <Pane display='flex' justifyContent='center' alignItems='center' width='36px' height='36px'>
-        <Icon
-          className={styles.icon}
-          icon='grid'
-          title='Toggle Grid'
-          htmlTitle='Toggle Grid'
-          onClick={() => Store.toggleCanvasGrid()}
-        />
-      </Pane>
-
-      <Pane display='flex' justifyContent='center' alignItems='center' width='36px' height='36px'>
-        <Icon
-          className={styles.icon}
-          icon='floppy-disk'
-          title='Save'
-          htmlTitle='Save'
-          onClick={Store.save}
-        />
-      </Pane>
+      <Spacer width='12px' />
     </Pane>
   )
 })

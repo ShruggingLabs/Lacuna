@@ -3,7 +3,7 @@ import { Router as Wouter, Switch, Route, useRouter, useLocation, useRoute } fro
 import { TopBar } from "./components/TopBar"
 import { Editor } from "./features/Editor"
 import Store from "./state"
-import { Canvas } from "./features/Canvas"
+import { DOMCanvas } from "./features/DOMCanvas"
 
 export const Router = (props) => {
   return (
@@ -11,7 +11,7 @@ export const Router = (props) => {
       <Switch>
         <Route path='/' component={HomeView} />
         <Route path='/projects' component={ProjectsView} />
-        <Route path='/projects/:projectId/editor' component={EditorView} />
+        <Route path='/projects/:projectId/editor' component={ProjectPreview} />
         <Route path='/projects/:projectId/preview' component={ProjectPreview} />
         <Route path='/:rest*'>404, not found!</Route>
       </Switch>
@@ -62,5 +62,5 @@ const ProjectPreview = (props) => {
     Store.loadProject(props.params.projectId)
   }, [])
 
-  return <Canvas />
+  return <DOMCanvas />
 }

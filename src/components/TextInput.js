@@ -19,23 +19,41 @@ const LeadingIcon = (props) => {
 }
 
 export const TextInput = (props) => {
+  const [localValue, setLocalValue] = React.useState()
   const { textAlign, variant, className, tagText, width } = props
   const { iconHint, iconName, uniconName, ...inputProps } = props
   const isMinimalVariant = variant === "minimal"
 
+  const onChange = (event) => {
+    const value = event.target.value
+
+    if (!value) {
+      setLocalValue(" ")
+      return null
+    }
+
+    setLocalValue()
+    props.onChange(event)
+  }
+
   const variantClassName = isMinimalVariant ? styles.minimalVariant : ""
   const textInputClassName = classcat([styles.TextInput, variantClassName, className])
   const containerStyle = { width, textAlign }
+
+  const value = localValue || props.value
 
   if (isMinimalVariant) {
     return (
       <div className={styles.TextInputContainer} title={iconHint} style={containerStyle}>
         <_TextInput
           {...inputProps}
+          disabled={props.isDisabled}
           marginBottom={0}
           textAlign={textAlign}
           className={textInputClassName}
           style={{ textAlign }}
+          onChange={onChange}
+          value={value}
         />
         <Choose>
           <When condition={iconName || uniconName}>

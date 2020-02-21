@@ -63,6 +63,22 @@ const views = (self) => {
     get hexaColor() {
       const { r, g, b, a } = self.color
       return "#" + rgbHex(r, g, b, a)
+    },
+
+    get textStyles() {
+      return {
+        fontFamily: self.fontFamily,
+        fontSize: self.fontSize + "em",
+        fontWeight: self.fontWeight,
+        fontStyle: self.fontStyle,
+        letterSpacing: self.letterSpacing,
+        lineHeight: self.lineHeight,
+        color: self.rgbaColorString,
+        overflow: "visible",
+        verticalAlign: self.verticalAlign,
+        textAlign: self.align,
+        cursor: "pointer"
+      }
     }
   }
 }

@@ -1,0 +1,57 @@
+.DOMCanvas {
+  min-width: 100vw;
+  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
+  overflow: scroll;
+  background: #eaecf0;
+  display: flex;
+}
+
+.documentScroller {
+  min-width: 150%;
+  min-height: 150%;
+  height: fit-content;
+  display: flex;
+  overflow: visble;
+  padding: 48px 0;
+}
+
+.document {
+  background: var(--white);
+  border: 2px solid var(--gray2);
+  width: 2550px;
+  height: 3300px;
+  min-width: 2550px;
+  min-height: 3300px;
+  zoom: var(--zoomLevel);
+  position: relative;
+  overflow: hidden;
+  font-size: 2px;
+}
+
+.leftPanel {
+  position: fixed;
+  top: 48px;
+  left: 48px;
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+}
+
+.rightPanel {
+  position: fixed;
+  top: 48px;
+  right: 96px;
+  display: flex;
+  flex-direction: column;
+  width: 380px;
+}
+
+.padder {
+  display: flex;
+  width: 500px;
+  min-width: 500px;
+  height: 100%;
+  flex-shrink: 0;
+}

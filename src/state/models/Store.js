@@ -22,14 +22,33 @@ const StoreModel = {
   wasFontRecentlyLoaded: false,
   setWasProjectRecentlySaved: false,
   isCanvasGridVisible: true,
-  fontsLoaded: 0
+  fontsLoaded: 0,
+  documentZoomLevel: 1
 }
 
 const actions = (self) => {
   const setMainSelectedLayer = (id) => (self.mainSelectedLayer = id)
 
+  const setDocumentZoomLevel = (n) => {
+    self.documentZoomLevel = Number(Number.parseFloat(n).toFixed(2))
+  }
+
+  const zoomInDocument = () => {
+    setDocumentZoomLevel(self.documentZoomLevel + 0.05)
+  }
+
+  const zoomOutDocument = () => {
+    setDocumentZoomLevel(self.documentZoomLevel - 0.05)
+  }
+
   const addTextLayer = () => {
-    self.layers.push(TextLayer.create())
+    self.layers.push(
+      TextLayer.create({
+        style: {
+          height: "auto"
+        }
+      })
+    )
   }
 
   const addImageLayer = (layer) => {
@@ -52,7 +71,9 @@ const actions = (self) => {
 
   const selectLayer = (layer) => {
     // Thou shalt not select invisible layers.
-    layer.isVisible && setMainSelectedLayer(layer.id)
+    typeof layer === "string"
+      ? setMainSelectedLayer(layer)
+      : layer.isVisible && setMainSelectedLayer(layer.id)
   }
 
   const deselectLayer = () => {
@@ -162,6 +183,9 @@ const actions = (self) => {
     removeLayer,
     loadProject,
     save,
+    setDocumentZoomLevel,
+    zoomInDocument,
+    zoomOutDocument,
 
     setWasFontRecentlyLoaded: action((value) => {
       self.wasFontRecentlyLoaded = value

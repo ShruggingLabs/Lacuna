@@ -15,7 +15,7 @@ export const ColorPicker = (props) => {
   }
 
   return (
-    <Pane>
+    <Pane position='relative'>
       <Popover
         position={Position.BOTTOM_RIGHT}
         content={
@@ -28,7 +28,7 @@ export const ColorPicker = (props) => {
           </Pane>
         }
       >
-        <Pane>
+        <Pane position='relative'>
           <Button>
             <Pane display='flex' alignItems='center'>
               <If condition={props.label}>

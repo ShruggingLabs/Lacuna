@@ -1,8 +1,8 @@
 #Canvas {
   contain: content;
   position: relative;
-  width: 816px;
-  height: 1056px;
+  width: 2550px;
+  height: 3300px;
   display: flex;
   background: #ffffff;
   background: var(--white);
@@ -12,6 +12,7 @@
   image-rendering: -moz-crisp-edges; /* Firefox */
   image-rendering: -webkit-crisp-edges; /* Webkit (Safari) */
   image-rendering: pixelated; /* Chrome */
+  zoom: 0.5;
 }
 
 #Preview #Canvas {

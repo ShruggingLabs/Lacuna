@@ -1,35 +1,13 @@
 import { observer } from "mobx-react"
 import * as React from "react"
-import { useKey, useKeyPressEvent } from "react-use"
-import Store from "../../state/index"
-import { Canvas } from "../Canvas"
-import { DocumentControlPanel } from "./CanvasControlPanel"
-import { LeftMenuColumn } from "./LeftMenuColumn"
 import UseKey from "react-use/lib/comps/UseKey"
+import Store from "#state"
 
 const isAnInputFocused = () => {
   return document.querySelector("input:focus")
 }
 
-export const Editor = observer((props) => {
-  const fonts = Store.allFontNames
-  const layer = Store.mainSelectedLayer
-
-  return (
-    <div className='Editor'>
-      <KeyHandlers />
-      <LeftMenuColumn />
-      <Canvas layers={Store.layers} fonts={fonts} />
-      <DocumentControlPanel />
-    </div>
-  )
-})
-
-const Zooms = (props) => {
-  return <div style={{ position: "absolute" }} />
-}
-
-const KeyHandlers = observer((props) => {
+export const KeyHandlers = observer((props) => {
   const ArrowUp = (
     <UseKey
       filter='ArrowUp'

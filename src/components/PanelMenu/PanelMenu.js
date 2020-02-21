@@ -3,6 +3,7 @@ import * as React from "react"
 import Spacer from "react-spacer"
 import { Icon } from "../../components/Icon"
 import styles from "./PanelMenu.module.css"
+import { ToolBar } from "./ToolsBar"
 
 const PanelMenuTitle = (props) => {
   return (
@@ -40,3 +41,5 @@ export const PanelMenu = (props) => {
     </PanelMenuContainer>
   )
 }
+
+PanelMenu.ToolBar = ToolBar

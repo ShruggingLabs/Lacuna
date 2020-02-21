@@ -13,6 +13,7 @@ import { Unicon } from "../../../components/Icon"
 
 export const MeasurementsEditor = observer((props) => {
   const { layer } = props
+
   return (
     <EditorSection title='Measurements'>
       <EditorSection.Row>
@@ -24,7 +25,7 @@ export const MeasurementsEditor = observer((props) => {
           iconName='arrow-right'
           iconHint='X Position'
           type='number'
-          tagText='px'
+          tagText='%'
         />
         <Spacer shrink={0} width='8px' />
         <TextInput
@@ -35,7 +36,7 @@ export const MeasurementsEditor = observer((props) => {
           iconName='arrow-down'
           iconHint='Y Position'
           type='number'
-          tagText='px'
+          tagText='%'
         />
         <Spacer shrink={0} width='8px' />
         <TextInput
@@ -46,17 +47,17 @@ export const MeasurementsEditor = observer((props) => {
           iconName='arrows-horizontal'
           iconHint='Width'
           type='number'
-          tagText='px'
+          tagText='%'
         />
         <Spacer shrink={0} width='8px' />
         <TextInput
           variant='minimal'
-          isDisabled
+          isDisabled={layer.type !== "box"}
           placeholder='auto'
           iconName='arrows-vertical'
           iconHint='Height'
           type='number'
-          tagText='px'
+          tagText='%'
           value={layer.type === "text" ? " " : layer.style.height}
           onChange={withEventValue(layer.style.setHeight)}
           disabled={layer.type === "text"}
@@ -180,13 +181,13 @@ export const FontEditor = observer((props) => {
       <EditorSection.Row>
         <TextInput
           variant='minimal'
-          placeholder='16px'
+          placeholder='10x'
           value={layer.style.fontSize}
           onChange={withEventValue(layer.style.setFontSize)}
           uniconName='text-size'
           iconHint='Font Size'
           type='number'
-          tagText='px'
+          tagText='x'
         />
         <Spacer shrink={0} width='12px' />
         <TextInput

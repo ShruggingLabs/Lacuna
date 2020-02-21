@@ -23,3 +23,29 @@
   height: 1px;
   border-bottom: 1px solid rgb(237, 240, 242);
 }
+
+.ToolBar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 36px;
+  width: 100%;
+  background: var(--black);
+}
+
+.icon {
+  color: #fff;
+}
+
+.icon:hover {
+  color: #36aee8;
+}
+
+.disabledIcon {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.icon.disabledIcon:hover {
+  color: var(--colorWhite) !important;
+}

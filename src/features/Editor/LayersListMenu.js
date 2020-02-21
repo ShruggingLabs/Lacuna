@@ -18,10 +18,9 @@ const shouldPreventSort = (event) => {
 
 export const LayersListMenu = observer(() => {
   const isLayersEmpty = Store.layers.length === 0
-  const menuTitle = `Layers` //(${Store.layers.length})`
 
   return (
-    <PanelMenu title={menuTitle} titleIcon='layers'>
+    <PanelMenu title='Layers' titleIcon='layers'>
       <DocumentToolsMenu />
       <If condition={isLayersEmpty}>
         <div style={{ width: "100%", height: 28 }} />
@@ -75,22 +74,6 @@ const LayersList = SortableContainer(
     )
   })
 )
-
-const useInterval = (condition, handler, alternateHandler, interval) => {
-  const deleteInterval = React.useRef()
-  const result = condition()
-
-  React.useEffect(() => {
-    if (result) {
-      deleteInterval.current = setInterval(handler, interval)
-    }
-
-    if (!result) {
-      clearInterval(deleteInterval.current)
-      alternateHandler()
-    }
-  }, [result])
-}
 
 // TODO: Re-design how deleting works.
 // Long click and layer fades out or some shit.
