@@ -271,10 +271,13 @@ body {
   flex-direction: column;
 }
 
-[evergreen-portal-container] {
-  position: absolute;
-  top: 0;
-  left: 0;
+/* [evergreen-portal-container] > div > [data-state="entered"] {
+  width: 100vw;
+  height: 100vh;
+} */
+
+[role="dialog"] > div {
+  background: #fff;
 }
 
 .LayerEditor .inputRow {
@@ -474,4 +477,30 @@ i:focus {
 
 .cnh_ended {
   display: flex;
+}
+
+.react-grid-Container {
+  clear: both;
+  margin-top: 0;
+  padding: 0;
+}
+.react-grid-Main {
+  background-color: #fff;
+  color: inherit;
+  padding: 0;
+  outline: 1px solid #e7eaec;
+  clear: both;
+}
+.react-grid-Grid {
+  border: 1px solid #ddd;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.react-grid-Canvas,
+.react-grid-Grid {
+  background-color: #fff;
 }

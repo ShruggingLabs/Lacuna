@@ -33,6 +33,15 @@ export const DocumentControlPanelToolBar = observer((props) => {
 
       <ActionIcon
         iconClassName={styles.icon}
+        iconName='th'
+        hint='Manage Dataset'
+        onClick={() => Store.toggleDatasetManager()}
+      />
+
+      <Spacer width='12px' />
+
+      <ActionIcon
+        iconClassName={styles.icon}
         iconName='grid'
         hint='Toggle Grid'
         onClick={() => Store.toggleCanvasGrid()}

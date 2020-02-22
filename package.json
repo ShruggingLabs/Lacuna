@@ -72,6 +72,8 @@
     "react-app-rewired": "^2.1.5",
     "react-click-n-hold": "^1.0.7",
     "react-color": "^2.18.0",
+    "react-data-grid": "^7.0.0-alpha.27",
+    "react-datasheet": "^1.4.1",
     "react-dev-utils": "^9.0.1",
     "react-dom": "16.12.0",
     "react-dropzone": "^10.2.1",

@@ -11,6 +11,8 @@ import { DocumentLayers } from "./DocumentLayers"
 import { KeyHandlers } from "./KeyHandlers"
 import * as storage from "../../utilities/backend/storage"
 import * as services from "../../services/database"
+import { Dialog, Pane } from "evergreen-ui"
+import { ProjectDatasetManager } from "./ProjectDatasetManager/ProjectDatasetManager"
 
 const onImageUpload = async (files) => {
   Store.setIsLoadingImage(true)
@@ -39,7 +41,7 @@ const onCanvasClick = (event) => {
   const id = event.target.getAttribute("data-layer-id")
   const isLocked = event.target.getAttribute("data-layer-locked") === "true"
 
-  isDocumentClick && Store.deselectLayer()
+  isDocumentClick || (isLocked && Store.deselectLayer())
   isLayerClick && !isLocked && Store.selectLayer(id)
 }
 
@@ -50,7 +52,15 @@ export const DOMCanvas = observer((props) => {
   const documentZoomLevel = Store.documentZoomLevel
 
   const cssVariables = {
-    "--zoomLevel": documentZoomLevel
+    "--zoomLevel": props.preview ? 1 : documentZoomLevel
+  }
+
+  if (props.preview) {
+    return (
+      <div className={styles.DOMCanvas} style={cssVariables}>
+        <Document />
+      </div>
+    )
   }
 
   return (
@@ -62,7 +72,11 @@ export const DOMCanvas = observer((props) => {
           <Document />
           <div className={styles.padder} />
         </div>
+        <If condition={Store.isDatasetManagerVisible}>
+          <ProjectDatasetManager />
+        </If>
       </div>
+
       <CanvasPanels />
     </>
   )

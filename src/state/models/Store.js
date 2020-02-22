@@ -1,4 +1,5 @@
 import sleep from "sleepjs"
+import data from "./data"
 import { types, getParent, destroy, flow, detach } from "mobx-state-tree"
 import makeInspectable from "mobx-devtools-mst"
 import arrayMove from "array-move"
@@ -23,10 +24,24 @@ const StoreModel = {
   setWasProjectRecentlySaved: false,
   isCanvasGridVisible: true,
   fontsLoaded: 0,
-  documentZoomLevel: 1
+  documentZoomLevel: 0.5,
+  isDatasetManagerVisible: false,
+  projectDataset: JSON.stringify(data)
+}
+
+const backupState = {
+  projectDataset: data
 }
 
 const actions = (self) => {
+  const toggleDatasetManager = (value = !self.isDatasetManagerVisible) => {
+    self.isDatasetManagerVisible = value
+  }
+
+  const updateProjectDataset = (dataset) => {
+    self.projectDataset = dataset
+  }
+
   const setMainSelectedLayer = (id) => (self.mainSelectedLayer = id)
 
   const setDocumentZoomLevel = (n) => {
@@ -148,7 +163,7 @@ const actions = (self) => {
   })
 
   const save = flow(function*() {
-    yield saveProject("2Ful8McNxcefAlD23AjrMh", toJS(self.layers))
+    yield saveProject("2Ful8McNxcefAlD23AjrMh", toJS(self.layers), self.projectDataset)
     self.setWasProjectRecentlySaved(true)
     yield sleep(2000)
     self.setWasProjectRecentlySaved(false)
@@ -157,7 +172,7 @@ const actions = (self) => {
   const loadProject = flow(function*(projectId) {
     const project = yield getProject(projectId)
 
-    console.log("loaded...", { project })
+    // updateProjectDataset(project.projectDataset)
 
     for (const layer of project.layers) {
       layer.type === "text" && self.layers.push(TextLayer.create(layer))
@@ -186,6 +201,8 @@ const actions = (self) => {
     setDocumentZoomLevel,
     zoomInDocument,
     zoomOutDocument,
+    toggleDatasetManager,
+    updateProjectDataset,
 
     setWasFontRecentlyLoaded: action((value) => {
       self.wasFontRecentlyLoaded = value
@@ -234,6 +251,20 @@ const views = (self) => {
       return self.layers.find((layer) => {
         return layer.id === id
       })
+    },
+
+    get projectDatasetJson() {
+      return JSON.parse(self.projectDataset)
+    },
+
+    get projectDatasetColumnNames() {
+      const dataset = self.projectDataset
+      return Object.keys(backupState.projectDataset[0])
+    },
+
+    getDemoDataRow() {
+      const dataset = self.projectDataset
+      return backupState.projectDataset[0]
     }
   }
 }

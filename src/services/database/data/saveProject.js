@@ -6,7 +6,7 @@ export const normalizeLayers = (layers) => {
   })
 }
 
-export const saveProject = async (projectId, storeLayers = []) => {
+export const saveProject = async (projectId, storeLayers = [], projectDataset) => {
   const layers = normalizeLayers(storeLayers)
-  await updateProject(projectId, { layers })
+  await updateProject(projectId, { layers, projectDataset })
 }

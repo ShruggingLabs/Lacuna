@@ -32,9 +32,13 @@ const ImageLayer = observer((props) => {
     cursor: props.layer.isLocked ? "initial" : "pointer"
   }
 
+  const src = props.layer.imageUrlDataLink
+    ? Store.getDemoDataRow()[props.layer.imageUrlDataLink]
+    : props.layer.image.fileUrl
+
   return (
     <img
-      src={props.layer.image.fileUrl}
+      src={src}
       data-layer-id={props.layer.id}
       data-layer-locked={props.layer.isLocked}
       data-selected-layer={Store.isSelected(props.layer.id)}
@@ -52,6 +56,10 @@ const TextLayer = observer((props) => {
     ...props.layer.style.textStyles
   }
 
+  const text = props.layer.textDataLink
+    ? Store.getDemoDataRow()[props.layer.textDataLink]
+    : props.layer.text
+
   return (
     <p
       data-layer-id={props.layer.id}
@@ -59,7 +67,7 @@ const TextLayer = observer((props) => {
       data-selected-layer={Store.isSelected(props.layer.id)}
       style={style}
     >
-      {props.layer.text}
+      {text}
     </p>
   )
 })

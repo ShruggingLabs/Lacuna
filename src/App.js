@@ -8,6 +8,8 @@ import Store from "./state"
 import "./styles/blueprint.css"
 import "./styles/blueprint-icons.css"
 import "./styles/index.css"
+import "react-data-grid/dist/react-data-grid.css"
+import "react-datasheet/lib/react-datasheet.css"
 
 import { TopBar } from "./components/TopBar"
 

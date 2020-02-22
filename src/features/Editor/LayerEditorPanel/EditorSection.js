@@ -2,9 +2,9 @@ import { Pane } from "evergreen-ui"
 import { observer } from "mobx-react"
 import * as React from "react"
 import Spacer from "react-spacer"
-import { CapsText } from "../../../components/CapsText"
-import { TextInput } from "../../../components/TextInput"
-import { withEventValue } from "../../../utilities/withEventValue"
+import { CapsText } from "#components/CapsText"
+import { TextInput } from "#components/TextInput"
+import { withEventValue } from "#utilities/withEventValue"
 
 const EditorSectionRow = (props) => {
   return (

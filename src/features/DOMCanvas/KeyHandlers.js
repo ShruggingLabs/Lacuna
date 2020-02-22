@@ -15,7 +15,6 @@ export const KeyHandlers = observer((props) => {
         const layer = Store.mainSelectedLayer
 
         if (layer) {
-          console.log("SEL LAYER", layer)
           if (isAnInputFocused()) return
           const newValue = event.shiftKey ? layer.style.top - 10 : layer.style.top - 1
           layer.style.setTop(newValue)
@@ -62,7 +61,6 @@ export const KeyHandlers = observer((props) => {
         const layer = Store.mainSelectedLayer
 
         if (layer) {
-          console.log("SEL LAYER", layer)
           if (isAnInputFocused()) return
           const newValue = event.shiftKey ? layer.style.left + 10 : layer.style.left + 1
           layer.style.setLeft(newValue)
@@ -78,7 +76,6 @@ export const KeyHandlers = observer((props) => {
         const layer = Store.mainSelectedLayer
 
         if (layer) {
-          console.log("SEL LAYER", layer)
           if (isAnInputFocused()) return
           layer.trash()
         }
@@ -93,7 +90,6 @@ export const KeyHandlers = observer((props) => {
         const layer = Store.mainSelectedLayer
 
         if (layer && event.ctrlKey) {
-          console.log("SEL LAYER", layer)
           event.preventDefault()
           Store.deselectLayer()
         }

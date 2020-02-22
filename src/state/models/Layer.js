@@ -21,7 +21,8 @@ const LayerModel = {
   isDeleted: types.optional(types.boolean, false),
   foo: 0,
   scaleX: 1,
-  scaleY: 1
+  scaleY: 1,
+  textDataLink: ""
 }
 
 const actions = (self) => {
@@ -35,6 +36,10 @@ const actions = (self) => {
   const setCreatedBy = (value) => (self.createdBy = value)
   const setUpdatedBy = (value) => (self.updatedBy = value)
   const setFoo = () => (self.foo += 1)
+
+  const setTextDataLink = (key) => {
+    self.textDataLink = key
+  }
 
   const setScaleX = (value) => (self.scaleX = value)
   const setScaleY = (value) => (self.scaleY = value)
@@ -84,6 +89,7 @@ const actions = (self) => {
   const afterCreate = () => {}
 
   return {
+    setTextDataLink,
     setFoo,
     trash,
     onDoneDeleting,

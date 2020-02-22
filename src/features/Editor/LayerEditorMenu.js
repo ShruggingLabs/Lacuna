@@ -3,9 +3,9 @@ import { observer } from "mobx-react"
 import * as React from "react"
 import { PanelMenu } from "../../components/PanelMenu/PanelMenu"
 import Store from "../../state"
-import { BoxLayerEditor } from "./LayerEditorPanel/BoxLayerEditor"
-import { ImageLayerEditor } from "./LayerEditorPanel/ImageLayerEditor"
-import { TextLayerEditor } from "./LayerEditorPanel/TextLayerEditor"
+import { BoxLayerEditor } from "../DOMCanvas/DocumentLayerEditor/BoxLayerEditor"
+import { ImageLayerEditor } from "../DOMCanvas/DocumentLayerEditor/ImageLayerEditor"
+import { TextLayerEditor } from "../DOMCanvas/DocumentLayerEditor/TextLayerEditor"
 
 export const LayerEditorMenu = observer((props) => {
   const selectedLayer = Store.mainSelectedLayer

@@ -6,6 +6,7 @@ import Color from "./Color"
 import { minMax } from "./../../utilities/minMax"
 
 const Width = types.refinement(types.number, (n) => minMax(0, 2550)(n))
+
 const Height = types.union(
   types.refinement(types.number, (n) => minMax(0, 3300)(n)),
   types.string
@@ -30,16 +31,19 @@ const actions = (self) => {
   const sizeMinMax = minMax(1, 3300)
 
   const setTop = (value) => {
-    self.top = Math.round(topMinMax(Number(value)))
+    self.top = Number(Number.parseFloat(sizeMinMax(String(value)).toFixed(2)))
   }
 
   const setLeft = (value) => {
     self.left = Math.round(leftMinMax(Number(value)))
   }
 
-  const setWidth = (value) => (self.width = Math.round(sizeMinMax(Number(value))))
-  const setHeight = (value) => (self.height = Math.round(sizeMinMax(Number(value))))
-  const setOpacity = (value) => (self.opacity = Number(Number.parseFloat(value).toFixed(1)))
+  const setWidth = (value) =>
+    (self.width = Number(Number.parseFloat(sizeMinMax(String(value)).toFixed(2))))
+  const setHeight = (value) =>
+    (self.height = Number(Number.parseFloat(sizeMinMax(String(value)).toFixed(2))))
+  const setOpacity = (value) =>
+    (self.opacity = Number(Number(Number.parseFloat(String(value)).toFixed(1))))
   const setBackgroundColor = (value) => (self.backgroundColor = value)
   const afterCreate = () => {}
 
@@ -71,7 +75,8 @@ const views = (self) => {
         width: self.width + "%",
         height: self.height + "%",
         top: self.top + "%",
-        left: self.left + "%"
+        left: self.left + "%",
+        backgroundColor: self.rgbaBackgroundColorString
       }
     }
   }

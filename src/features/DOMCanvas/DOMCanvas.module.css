@@ -32,20 +32,20 @@
 
 .leftPanel {
   position: fixed;
-  top: 48px;
+  top: 96px;
   left: 48px;
   display: flex;
   flex-direction: column;
-  width: 340px;
+  width: 360px;
 }
 
 .rightPanel {
   position: fixed;
-  top: 48px;
+  top: 96px;
   right: 96px;
   display: flex;
   flex-direction: column;
-  width: 380px;
+  width: 400px;
 }
 
 .padder {

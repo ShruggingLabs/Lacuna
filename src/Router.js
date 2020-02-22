@@ -11,7 +11,7 @@ export const Router = (props) => {
       <Switch>
         <Route path='/' component={HomeView} />
         <Route path='/projects' component={ProjectsView} />
-        <Route path='/projects/:projectId/editor' component={ProjectPreview} />
+        <Route path='/projects/:projectId/editor' component={EditorView} />
         <Route path='/projects/:projectId/preview' component={ProjectPreview} />
         <Route path='/:rest*'>404, not found!</Route>
       </Switch>
@@ -50,7 +50,7 @@ const EditorView = (props) => {
   return (
     <div className='ProjectEditor'>
       <TopBar />
-      <Editor />
+      <DOMCanvas />
     </div>
   )
 }
@@ -62,5 +62,5 @@ const ProjectPreview = (props) => {
     Store.loadProject(props.params.projectId)
   }, [])
 
-  return <DOMCanvas />
+  return <DOMCanvas preview={true} />
 }

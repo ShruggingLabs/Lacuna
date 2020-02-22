@@ -21,7 +21,8 @@ const model = {
   color: types.optional(Color, { r: 0, g: 0, b: 0, a: 1 }),
   overflow: "visible",
   verticalAlign: "middle",
-  align: "left",
+  textAlign: "left",
+  justifyContent: "flex-start",
   isLoadingFont: false
 }
 
@@ -34,7 +35,13 @@ const actions = (self) => {
     self.fontWeight = "400"
   }
 
-  const setAlign = (value) => (self.align = value)
+  const setAlign = (value) => {
+    self.textAlign = value
+    value === "left" && (self.justifyContent = `flex-start`)
+    value === "right" && (self.justifyContent = `flex-end`)
+    value === "center" && (self.justifyContent = value)
+  }
+
   const setFontWeight = withEventValue((value) => (self.fontWeight = value))
   const setFontStyle = withEventValue((value) => (self.fontStyle = value))
   const setLineHeight = withEventValue((value) => (self.lineHeight = Number(value)))
@@ -76,8 +83,10 @@ const views = (self) => {
         color: self.rgbaColorString,
         overflow: "visible",
         verticalAlign: self.verticalAlign,
-        textAlign: self.align,
-        cursor: "pointer"
+        textAlign: self.textAlign,
+        justifyContent: self.justifyContent,
+        cursor: "pointer",
+        backgroundColor: self.rgbaBackgroundColorString
       }
     }
   }
