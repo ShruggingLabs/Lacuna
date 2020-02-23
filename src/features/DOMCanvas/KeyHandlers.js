@@ -2,6 +2,8 @@ import { observer } from "mobx-react"
 import * as React from "react"
 import UseKey from "react-use/lib/comps/UseKey"
 import Store from "#state"
+import { toJS } from "mobx"
+import nanoid from "nanoid"
 
 const isAnInputFocused = () => {
   return document.querySelector("input:focus")
@@ -88,10 +90,34 @@ export const KeyHandlers = observer((props) => {
       filter='d'
       fn={(event) => {
         const layer = Store.mainSelectedLayer
+        event.preventDefault()
 
         if (layer && event.ctrlKey) {
           event.preventDefault()
           Store.deselectLayer()
+        }
+      }}
+    />
+  )
+
+  const n = (
+    <UseKey
+      filter='n'
+      fn={(event) => {
+        const layer = Store.mainSelectedLayer
+        event.preventDefault()
+
+        console.log(layer, event.altKey, event)
+
+        if (layer && event.altKey) {
+          const newLayer = toJS(layer)
+          newLayer.id = nanoid()
+          newLayer.name = newLayer.name + " copy"
+
+          newLayer.type === "text" && Store.addTextLayer(newLayer)
+          newLayer.type === "image" && Store.addImageLayer(newLayer)
+          newLayer.type === "box" && Store.addBoxLayer(newLayer)
+          return
         }
       }}
     />
@@ -105,6 +131,7 @@ export const KeyHandlers = observer((props) => {
       {ArrowRight}
       {Delete}
       {d}
+      {n}
     </>
   )
 })
