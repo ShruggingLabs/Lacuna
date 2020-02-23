@@ -12,7 +12,7 @@ const PanelMenuTitle = (props) => {
         <Icon icon={props.icon} size='14px' color='var(--colorGrayscale5)' />
         <Spacer width='12px' />
       </If>
-      <Heading size={400} color='var(--colorGrayscale12)' className={styles.PanelMenuTitle}>
+      <Heading size={400} color='var(--colorGrayscale1)' className={styles.PanelMenuTitle}>
         {props.title}
       </Heading>
     </Pane>
