@@ -28,7 +28,7 @@ const ImageLayer = observer((props) => {
   // isSelected: props.layer.isVisible && Store.isSelected(props.layer.id),
 
   const style = {
-    ...props.layer.style.documentLayerStyles,
+    ...props.layer.style.layerStyles,
     cursor: props.layer.isLocked ? "initial" : "pointer"
   }
 
@@ -52,7 +52,7 @@ const TextLayer = observer((props) => {
   // draggable: props.layer.isVisible && Store.isSelected(props.layer.id),
   // isSelected: props.layer.isVisible && Store.isSelected(props.layer.id),
   const style = {
-    ...props.layer.style.documentLayerStyles,
+    ...props.layer.style.layerStyles,
     ...props.layer.style.textStyles
   }
 
@@ -82,7 +82,7 @@ const BoxLayer = observer((props) => {
       data-layer-id={props.layer.id}
       data-layer-locked={props.layer.isLocked}
       data-selected-layer={Store.isSelected(props.layer.id)}
-      style={props.layer.style.documentLayerStyles}
+      style={props.layer.style.layerStyles}
     />
   )
 })

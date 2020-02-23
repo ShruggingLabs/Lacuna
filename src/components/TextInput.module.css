@@ -27,6 +27,7 @@
   top: 9px;
   font-size: 18px;
   height: 100%;
+  /* line-height: 0.9; */
 }
 
 :global(._unicon).leadingIcon {

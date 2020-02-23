@@ -8,8 +8,8 @@ import TextLayer from "./TextLayer"
 import BoxLayer from "./BoxLayer"
 import { autorun, action, toJS } from "mobx"
 import delay from "delay"
-import { saveProject } from "../../services/database/data/saveProject"
-import { getProject } from "../../services/database/data"
+import { saveProject } from "#services/database/data/saveProject"
+import { getProject } from "#services/database/data"
 
 const LayersUnion = types.union(ImageLayer, TextLayer, BoxLayer)
 
@@ -130,20 +130,6 @@ const actions = (self) => {
 
   const afterCreate = () => {
     makeInspectable(self)
-
-    // autorun(() => {
-    //   const layer = self.mainSelectedLayer
-
-    //   const handler = (event) => {
-    //     const selectedLayer = self.mainSelectedLayer
-
-    //     if (!selectedLayer) return
-    //     console.log(event.key, event.code, event.which, selectedLayer, selectedLayer.name)
-    //   }
-
-    //   window.addEventListener("keypress", handler)
-    //   return () => window.removeEventListener("keypress", handler)
-    // })
   }
 
   const toggleCanvasGrid = action(() => {

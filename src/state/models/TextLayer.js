@@ -1,8 +1,8 @@
 import { types } from "mobx-state-tree"
 
-import { withEventValue } from "../../utilities/withEventValue"
+import { withEventValue } from "#utilities/withEventValue"
 import Layer from "./Layer"
-import TextLayerStyle from "./TextLayerStyle"
+import Style from "./Style"
 
 const loremText = `Lorem ipsum is placeholder text.`
 //  commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
@@ -11,7 +11,7 @@ const model = {
   type: types.optional(types.string, "text"),
   text: types.optional(types.string, loremText),
   name: types.optional(types.string, "text layer "),
-  style: types.optional(TextLayerStyle, {}),
+  style: types.optional(Style, {}),
   isEditing: false
 }
 

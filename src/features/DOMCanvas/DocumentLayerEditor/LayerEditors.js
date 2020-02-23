@@ -59,10 +59,11 @@ export const VerticalPositionEditor = observer((props) => {
       placeholder='0px'
       value={props.layer.style.top}
       onChange={withEventValue(props.layer.style.setTop)}
-      iconName='arrow-down'
+      // iconName='arrow-down'
+      icon='Y'
       iconHint='Y Position'
       type='number'
-      tagText='%'
+      tagText='px'
       step={0.1}
     />
   )
@@ -75,10 +76,11 @@ export const HorizontalPositionEditor = observer((props) => {
       placeholder='0px'
       value={props.layer.style.left}
       onChange={withEventValue(props.layer.style.setLeft)}
-      iconName='arrow-right'
+      // iconName='arrow-right'
+      icon='X'
       iconHint='X Position'
       type='number'
-      tagText='%'
+      tagText='px'
     />
   )
 })
@@ -90,28 +92,33 @@ export const WidthEditor = observer((props) => {
       placeholder='auto'
       value={props.layer.style.width}
       onChange={withEventValue(props.layer.style.setWidth)}
-      iconName='arrows-horizontal'
+      // iconName='arrows-horizontal'
       iconHint='Width'
+      icon='W'
       type='number'
-      tagText='%'
+      tagText='px'
       step={0.1}
     />
   )
 })
 
 export const HeightEditor = observer((props) => {
+  // Only allow controlling height on box layers.
+  const value = props.layer.type === "box" ? props.layer.style.height : " "
+
   return (
     <TextInput
       variant='minimal'
       isDisabled={props.layer.type !== "box"}
       placeholder='auto'
-      iconName='arrows-vertical'
+      // iconName='arrows-vertical'
+      icon='H'
       iconHint='Height'
       type='number'
-      tagText='%'
-      value={props.layer.type === "text" ? " " : props.layer.style.height}
+      tagText='px'
+      value={value}
       onChange={withEventValue(props.layer.style.setHeight)}
-      disabled={props.layer.type === "text"}
+      disabled={props.layer.type !== "box"}
     />
   )
 })
@@ -164,7 +171,7 @@ export const LayerNameEditor = observer((props) => {
           iconHint='layer name'
           type='text'
           value={props.layer.name}
-          onChange={props.layer.setName}
+          onChange={(event) => props.layer.setName(event.target.value)}
         />
       </EditorSection.Row>
     </EditorSection>
@@ -176,7 +183,7 @@ export const BackgroundColorEditor = observer((props) => {
     <ColorPicker
       label=''
       onChange={(rgb) => props.layer.style.setBackgroundColor(rgb)}
-      currentColor={props.layer.style.rgbaBackgroundColorString}
+      currentColor={props.layer.style.backgroundColorString}
       layer={props.layer}
     />
   )
@@ -307,7 +314,7 @@ export const FontEditor = observer((props) => {
         <ColorPicker
           label=''
           onChange={(rgb) => props.layer.style.setColor(rgb)}
-          currentColor={layer.style.rgbaColorString}
+          currentColor={layer.style.colorString}
           layer={layer}
         />
         <Spacer shrink={0} width='12px' />
@@ -334,7 +341,7 @@ export const FontEditor = observer((props) => {
           uniconName='line-spacing'
           iconHint='Line Height'
           type='number'
-          tagText='x'
+          tagText='%'
           step={0.1}
         />
         <Spacer shrink={0} width='12px' />

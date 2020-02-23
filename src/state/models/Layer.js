@@ -1,7 +1,8 @@
 import { types, getParent, destroy, detach, flow } from "mobx-state-tree"
+import makeInspectable from "mobx-devtools-mst"
 
-import { withEventValue } from "../../utilities/withEventValue"
-import { nanoid } from "../../utilities/nanoid"
+import { withEventValue } from "#utilities/withEventValue"
+import { nanoid } from "#utilities/nanoid"
 import { reaction, action } from "mobx"
 
 const LAYER_TYPES_ENUM = types.enumeration(["text", "image", "box"])
@@ -26,7 +27,7 @@ const LayerModel = {
 }
 
 const actions = (self) => {
-  const setName = withEventValue((value) => (self.name = value))
+  const setName = (value) => (self.name = value)
   const toggleIsVisible = (value = !self.isVisible) => (self.isVisible = value)
   const toggleIsLocked = (value = !self.isLocked) => (self.isLocked = value)
   const toggleIsSelected = (value = !self.isSelected) => (self.isSelected = value)
@@ -62,45 +63,19 @@ const actions = (self) => {
     getParent(self, 2).removeLayer(self)
   })
 
-  const setIsDeleting = (bool) => {
-    self.isDeleting = bool
+  const afterCreate = () => {
+    makeInspectable(self)
   }
-
-  const onDoneDeleting = (value) => {
-    setIsDeleting(false)
-    self.remove()
-  }
-
-  const mouseUpHandler = () => {
-    self.setIsDeleting(false)
-  }
-
-  reaction(
-    () => self.isDeleting,
-    (isDeleting) => {
-      if (isDeleting) {
-        window.addEventListener("mouseup", mouseUpHandler)
-      } else {
-        window.removeEventListener("mouseup", mouseUpHandler)
-      }
-    }
-  )
-
-  const afterCreate = () => {}
 
   return {
     setTextDataLink,
     setFoo,
     trash,
-    onDoneDeleting,
-    onDoneDeleting,
-    setIsDeleting,
     setScaleX,
     setScaleY,
     reposition,
     resize,
     remove,
-    afterCreate,
     setName,
     toggleIsVisible,
     toggleIsLocked,

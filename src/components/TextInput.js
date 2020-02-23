@@ -21,7 +21,7 @@ const LeadingIcon = (props) => {
 export const TextInput = (props) => {
   const [localValue, setLocalValue] = React.useState()
   const { textAlign, variant, className, tagText, width } = props
-  const { iconHint, iconName, uniconName, ...inputProps } = props
+  const { iconHint, iconName, icon, uniconName, ...inputProps } = props
   const isMinimalVariant = variant === "minimal"
 
   const onChange = (event) => {
@@ -56,6 +56,11 @@ export const TextInput = (props) => {
           value={value}
         />
         <Choose>
+          <When condition={icon}>
+            <span className={styles.leadingIcon} style={{ fontSize: "16px", lineHeight: 0.9 }}>
+              {icon}
+            </span>
+          </When>
           <When condition={iconName || uniconName}>
             <LeadingIcon {...props} />
           </When>

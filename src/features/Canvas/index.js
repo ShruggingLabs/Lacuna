@@ -183,7 +183,7 @@ const CanvasTextLayer = observer((props) => {
       dragDistance={12}
       wrap='word'
       opacity={props.layer.style.opacity}
-      fill={props.layer.style.rgbaColorString}
+      fill={props.layer.style.colorString}
       lineHeight={props.layer.style.lineHeight}
       letterSpacing={props.layer.style.letterSpacing}
       fontFamily={props.layer.style.fontFamily}
@@ -271,7 +271,7 @@ const CanvasBoxLayer = observer((props) => {
       type='box'
       layer={props.layer}
       opacity={props.layer.style.opacity}
-      fill={props.layer.style.rgbaBackgroundColorString}
+      fill={props.layer.style.backgroundColorString}
       draggable={props.layer.isVisible && Store.isSelected(props.layer.id)}
       isSelected={props.layer.isVisible && Store.isSelected(props.layer.id)}
       visible={props.layer.isVisible}
