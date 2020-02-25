@@ -55,6 +55,19 @@ export const DocumentToolsMenu = observer((props) => {
       </Pane>
 
       <Spacer width='12px' />
+
+      <Pane display='flex' justifyContent='center' alignItems='center' width='36px' height='36px'>
+        <Icon
+          iconSize='14px'
+          className={styles.icon}
+          icon='layout-linear'
+          title='Add Image Row Layer'
+          htmlTitle='Add Image Row Layer'
+          onClick={() => Store.addImageRowLayer()}
+        />
+      </Pane>
+
+      <Spacer width='12px' />
     </Pane>
   )
 })

@@ -20,6 +20,12 @@
   border: unset;
 }
 
+#Canvas * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .CanvasContainer {
   image-rendering: -moz-crisp-edges; /* Firefox */
   image-rendering: -webkit-crisp-edges; /* Webkit (Safari) */

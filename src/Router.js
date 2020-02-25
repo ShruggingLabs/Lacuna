@@ -1,9 +1,10 @@
 import * as React from "react"
 import { Router as Wouter, Switch, Route, useRouter, useLocation, useRoute } from "wouter"
-import { TopBar } from "./components/TopBar"
-import { Editor } from "./features/Editor"
-import Store from "./state"
-import { DOMCanvas } from "./features/DOMCanvas"
+import { TopBar } from "#components/TopBar"
+import { Editor } from "#features/Editor"
+import Store from "#state"
+import { DOMCanvas } from "#features/DOMCanvas"
+import * as strapi from "#utilities/strapi"
 
 export const Router = (props) => {
   return (
@@ -60,6 +61,9 @@ const ProjectPreview = (props) => {
 
   React.useEffect(() => {
     Store.loadProject(props.params.projectId)
+    strapi.contentType("products").then((json) => {
+      console.log("\n\n\n\n", json, "\n\n\n")
+    })
   }, [])
 
   return <DOMCanvas preview={true} />

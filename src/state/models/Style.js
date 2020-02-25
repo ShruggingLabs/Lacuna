@@ -1,9 +1,9 @@
 import { types } from "mobx-state-tree"
 
 import { LAYER_TYPES_ENUM } from "./consts"
-import { withEventValue } from "../../utilities/withEventValue"
+import { withEventValue } from "#utilities/withEventValue"
 import Color from "./Color"
-import { minMax } from "./../../utilities/minMax"
+import { minMax } from "#utilities/minMax"
 import nanoid from "nanoid"
 
 const minMaxString = (min, max) => (s) => minMax(min, max)(Number(s))
@@ -34,6 +34,7 @@ const model = {
   overflow: "visible",
   verticalAlign: "middle",
   textAlign: "left",
+  alignItems: "center",
   justifyContent: "flex-start",
   isLoadingFont: false
 }
@@ -101,11 +102,7 @@ const actions = (self) => {
   const setColor = (value) => (self.color = value)
 
   const setFontSize = (value) => {
-    self.fontsize = fixedNumberString({
-      value: value,
-      minMax: fontSizeMinMax,
-      decimals: 1
-    })
+    return fontSizeMinMax(value)
   }
 
   const setFontFamily = (value) => {
@@ -175,11 +172,11 @@ const views = (self) => {
         height: self.height + "px",
         backgroundColor: self.backgroundColorString,
         fontFamily: self.fontFamily,
-        fontSize: self.fontSize + "px",
+        fontSize: self.fontSize + "pt",
         fontWeight: self.fontWeight,
         fontStyle: self.fontStyle,
         letterSpacing: self.letterSpacing + "px",
-        lineHeight: self.lineHeight + "%",
+        lineHeight: self.lineHeight,
         color: self.colorString,
         overflow: self.overflow,
         verticalAlign: self.verticalAlign,
@@ -191,24 +188,6 @@ const views = (self) => {
     get colorString() {
       const { r, g, b, a } = self.color
       return `rgba(${r}, ${g}, ${b}, ${a})`
-    },
-
-    get textStyles() {
-      return {
-        fontFamily: self.fontFamily,
-        fontSize: self.fontSize + "em",
-        fontWeight: self.fontWeight,
-        fontStyle: self.fontStyle,
-        letterSpacing: self.letterSpacing,
-        lineHeight: self.lineHeight,
-        color: self.colorString,
-        overflow: "visible",
-        verticalAlign: self.verticalAlign,
-        textAlign: self.textAlign,
-        justifyContent: self.justifyContent,
-        cursor: "pointer",
-        backgroundColor: self.backgroundColorString
-      }
     }
   }
 }

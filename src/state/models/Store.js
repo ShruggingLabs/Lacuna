@@ -6,12 +6,13 @@ import arrayMove from "array-move"
 import ImageLayer from "./ImageLayer"
 import TextLayer from "./TextLayer"
 import BoxLayer from "./BoxLayer"
+import ImageRowLayer from "./ImageRowLayer"
 import { autorun, action, toJS } from "mobx"
 import delay from "delay"
 import { saveProject } from "#services/database/data/saveProject"
 import { getProject } from "#services/database/data"
 
-const LayersUnion = types.union(ImageLayer, TextLayer, BoxLayer)
+const LayersUnion = types.union(ImageLayer, TextLayer, BoxLayer, ImageRowLayer)
 
 const StoreModel = {
   mainSelectedLayer: types.safeReference(LayersUnion),
@@ -68,6 +69,10 @@ const actions = (self) => {
 
   const addImageLayer = (layer) => {
     self.layers.push(ImageLayer.create(layer))
+  }
+
+  const addImageRowLayer = (layer) => {
+    self.layers.push(ImageRowLayer.create(layer))
   }
 
   const addLoadedFont = () => {
@@ -189,6 +194,7 @@ const actions = (self) => {
     zoomOutDocument,
     toggleDatasetManager,
     updateProjectDataset,
+    addImageRowLayer,
 
     setWasFontRecentlyLoaded: action((value) => {
       self.wasFontRecentlyLoaded = value

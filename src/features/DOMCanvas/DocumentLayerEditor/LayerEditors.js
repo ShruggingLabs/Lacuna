@@ -58,13 +58,13 @@ export const VerticalPositionEditor = observer((props) => {
       variant='minimal'
       placeholder='0px'
       value={props.layer.style.top}
-      onChange={withEventValue(props.layer.style.setTop)}
+      onChange={(event) => props.layer.style.setTop(event.target.value)}
       // iconName='arrow-down'
       icon='Y'
       iconHint='Y Position'
       type='number'
       tagText='px'
-      step={0.1}
+      step={1}
     />
   )
 })
@@ -75,7 +75,7 @@ export const HorizontalPositionEditor = observer((props) => {
       variant='minimal'
       placeholder='0px'
       value={props.layer.style.left}
-      onChange={withEventValue(props.layer.style.setLeft)}
+      onChange={(event) => props.layer.style.setLeft(event.target.value)}
       // iconName='arrow-right'
       icon='X'
       iconHint='X Position'
@@ -91,7 +91,7 @@ export const WidthEditor = observer((props) => {
       variant='minimal'
       placeholder='auto'
       value={props.layer.style.width}
-      onChange={withEventValue(props.layer.style.setWidth)}
+      onChange={(event) => props.layer.style.setWidth(event.target.value)}
       // iconName='arrows-horizontal'
       iconHint='Width'
       icon='W'
@@ -117,7 +117,7 @@ export const HeightEditor = observer((props) => {
       type='number'
       tagText='px'
       value={value}
-      onChange={withEventValue(props.layer.style.setHeight)}
+      onChange={(event) => props.layer.style.setHeight(event.target.value)}
       disabled={props.layer.type !== "box"}
     />
   )
@@ -135,7 +135,7 @@ export const OpacityEditor = observer((props) => {
       max={1}
       min={0}
       value={props.layer.style.opacity}
-      onChange={withEventValue(props.layer.style.setOpacity)}
+      onChange={(event) => props.layer.style.setOpacity(event.target.value)}
     />
   )
 })
@@ -288,6 +288,21 @@ export const ImageUrlLinkEditor = observer((props) => {
   )
 })
 
+export const ImageRowUrlsSelector = observer((props) => {
+  return (
+    <EditorSection title='Image Row Data Link'>
+      <EditorSection.Row>
+        <Select
+          width='100%'
+          onChange={(event) => props.layer.setImageRowUrlsDataLink(event.target.value)}
+          value={props.layer.imageRowUrlsDataLink}
+          options={["", ...Store.projectDatasetColumnNames]}
+        />
+      </EditorSection.Row>
+    </EditorSection>
+  )
+})
+
 export const BoxEditor = observer((props) => {
   const { layer } = props
 
@@ -303,41 +318,42 @@ export const BoxEditor = observer((props) => {
 })
 
 export const FontEditor = observer((props) => {
-  const { layer } = props
-  console.log({ layer, fontsManager })
-
   return (
     <EditorSection title='Font'>
       <EditorSection.Row>
-        <FontFamilyPicker layer={layer} />
+        <FontFamilyPicker layer={props.layer} />
         <Spacer shrink={0} width='12px' />
         <ColorPicker
           label=''
           onChange={(rgb) => props.layer.style.setColor(rgb)}
-          currentColor={layer.style.colorString}
-          layer={layer}
+          currentColor={props.layer.style.colorString}
+          layer={props.layer}
         />
         <Spacer shrink={0} width='12px' />
-        <BackgroundColorEditor layer={layer} />
+        <BackgroundColorEditor layer={props.layer} />
       </EditorSection.Row>
 
       <EditorSection.Row>
         <TextInput
           variant='minimal'
-          placeholder='10x'
-          value={layer.style.fontSize}
-          onChange={withEventValue(layer.style.setFontSize)}
+          placeholder='24'
+          value={props.layer.style.fontSize}
+          onChange={(event) => {
+            console.log("...event", typeof event.target.value)
+            props.layer.style.setFontSize(Number(event.target.value))
+          }}
           uniconName='text-size'
           iconHint='Font Size'
           type='number'
-          tagText='x'
+          tagText='pt'
+          step={1}
         />
         <Spacer shrink={0} width='12px' />
         <TextInput
           variant='minimal'
           placeholder='100%'
-          value={layer.style.lineHeight}
-          onChange={withEventValue(layer.style.setLineHeight)}
+          value={props.layer.style.lineHeight}
+          onChange={withEventValue(props.layer.style.setLineHeight)}
           uniconName='line-spacing'
           iconHint='Line Height'
           type='number'
@@ -348,8 +364,8 @@ export const FontEditor = observer((props) => {
         <TextInput
           variant='minimal'
           placeholder='0px'
-          value={layer.style.letterSpacing}
-          onChange={withEventValue(layer.style.setLetterSpacing)}
+          value={props.layer.style.letterSpacing}
+          onChange={withEventValue(props.layer.style.setLetterSpacing)}
           uniconName='shrink'
           iconHint='Letter Spacing'
           step={0.1}
@@ -359,9 +375,9 @@ export const FontEditor = observer((props) => {
       </EditorSection.Row>
 
       <EditorSection.Row>
-        <FontWeightPicker layer={layer} />
+        <FontWeightPicker layer={props.layer} />
         <Spacer shrink={0} width='12px' />
-        <FontStylePicker layer={layer} />
+        <FontStylePicker layer={props.layer} />
       </EditorSection.Row>
     </EditorSection>
   )

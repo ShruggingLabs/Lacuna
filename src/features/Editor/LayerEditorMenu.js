@@ -6,6 +6,7 @@ import Store from "../../state"
 import { BoxLayerEditor } from "../DOMCanvas/DocumentLayerEditor/BoxLayerEditor"
 import { ImageLayerEditor } from "../DOMCanvas/DocumentLayerEditor/ImageLayerEditor"
 import { TextLayerEditor } from "../DOMCanvas/DocumentLayerEditor/TextLayerEditor"
+import { ImageRowLayerEditor } from "../DOMCanvas/DocumentLayerEditor/ImageRowLayerEditor"
 
 export const LayerEditorMenu = observer((props) => {
   const selectedLayer = Store.mainSelectedLayer
@@ -31,6 +32,9 @@ const LayerEditor = observer((props) => {
         </When>
         <When condition={props.layer.type === "image"}>
           <ImageLayerEditor layer={props.layer} />
+        </When>
+        <When condition={props.layer.type === "imageRow"}>
+          <ImageRowLayerEditor layer={props.layer} />
         </When>
       </Choose>
     </div>
