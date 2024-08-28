@@ -100,7 +100,7 @@
     "url-loader": "1.1.2",
     "use-image": "^1.0.5",
     "use-why-did-you-update": "0.1.0",
-    "webpack": "4.29.6",
+    "webpack": "5.94.0",
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "4.2.0",
